@@ -2,11 +2,13 @@ const { client } = require('./client');
 const { createUser, getUserByUsername, getUser } = require('./user');
 const productData = require("./productData");
 const { createProduct, getProducts } = require('./product');
+const { createReview } = require('./reviews');
 
 async function dropTables() {
     try {
         console.log("Starting to drop tables")
         await client.query(`
+            DROP TABLE IF EXISTS reviews;
             DROP TABLE IF EXISTS products;
             DROP TABLE IF EXISTS users;
         `);
@@ -37,6 +39,12 @@ async function createTables() {
                 description TEXT NOT NULL,
                 inventory INTEGER,
                 "imgURL" TEXT NOT NULL
+            );
+            CREATE TABLE reviews (
+                id SERIAL PRIMARY KEY,
+                "creatorId" INTEGER REFERENCES users(id),
+                "productId" INTEGER REFERENCES products(id),
+                message TEXT NOT NULL
             );
         `);
         console.log('Finished building tables!');
@@ -103,6 +111,45 @@ async function createInitialProducts () {
                 imgURL: product.imgURL
             })
         }
+    } catch (error) {
+        throw error;
+    }
+};
+
+async function createInitialReviews() {
+    try {
+        console.log('Starting to create reviews');
+        await createReview({
+            creatorId: 1,
+            productId: 4,
+            message: 'This is nice and the size is accurate',
+        });
+        await createReview({
+            creatorId: 2,
+            productId: 5,
+            message: 'I love the fabric of this clothing!',
+        });
+        await createReview({
+            creatorId: 3,
+            productId: 6,
+            message: 'This shirt is really soft. I wear it the moment it gets out of the dryer!',
+        });
+        await createReview({
+            creatorId: 3,
+            productId: 2,
+            message: 'This ring fits really well! The quality is amazing and I love the details.',
+        });
+        await createReview({
+            creatorId: 2,
+            productId: 1,
+            message: 'I gave this as a gift and she told me that everyone notices it!',
+        });
+        await createReview({
+            creatorId: 1,
+            productId: 3,
+            message: 'I was gonna give this as a promise ring to my girl, but she dumped me. Their refund service is very helpful!',
+        });
+        console.log('Finished creating reviews!');
     } catch (error) {
         throw error;
     }
@@ -177,7 +224,7 @@ async function rebuildDB() {
         await createTables();
         await createInitialUsers();
         await createInitialProducts();
-        // await createInitialReviews();
+        await createInitialReviews();
         // await createInitialCarts();
         // await createInitialCartProducts();s
     } catch (error) {

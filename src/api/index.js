@@ -79,3 +79,13 @@ export async function fetchProductById (id) {
         throw error;
     }
 };
+
+export async function fetchReviews (id) {
+    try {
+        const resp = await fetch(`${BASE_URL}/reviews/${id}`);
+        const info = await resp.json();
+        return info.productReviews;
+    } catch (error) {
+        throw error;
+    }
+};

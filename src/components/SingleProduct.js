@@ -9,21 +9,21 @@ import { NotificationManager } from "react-notifications";
 const SingleProduct = () => {
     const {id} = useParams();
     const [product, setProduct] = useState([]);
-    // const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState([]);
     const [count, setCount] = useState(1);
     useEffect(() => {
         fetchProductById(id)
             .then(product => {
                 setProduct(product[0]);
             });
-        // fetchReviews(id)
-        //     .then(review => {
-        //         setReviews(review);
-        //     });
+        fetchReviews(id)
+            .then(review => {
+                setReviews(review);
+            });
     },[]);
-    // const mainReviews = reviews.map(review => {
-    //     return review.reviews[0];
-    // });
+    const mainReviews = reviews.map(review => {
+        return review.reviews[0];
+    });
     return (
         <div className="single-product_container">
             <div 
@@ -39,7 +39,7 @@ const SingleProduct = () => {
                 </div>
                 <p id="description">{product.description}</p>
                 <h2>Reviews: </h2>
-                {/* {mainReviews.map(review => {
+                {mainReviews.map(review => {
                     return (review?.id ?
                         <div key={review?.id}>
                             {review && <p>{review.message}</p>}
@@ -47,7 +47,7 @@ const SingleProduct = () => {
                         :
                         null
                     )
-                })} */}
+                })}
                 <input
                     type="number"
                     min="1"
