@@ -5,10 +5,6 @@ async function dropTables() {
     try {
         console.log("Starting to drop tables")
         await client.query(`
-            DROP TABLE IF EXISTS carts_products;
-            DROP TABLE IF EXISTS carts;
-            DROP TABLE IF EXISTS reviews;
-            DROP TABLE IF EXISTS products;
             DROP TABLE IF EXISTS users;
         `);
 
@@ -23,40 +19,13 @@ async function createTables() {
         console.log('Starting to build tables...');
 
         await client.query(`
-        CREATE TABLE users(
-            id SERIAL PRIMARY KEY,
-            email VARCHAR(255) UNIQUE NOT NULL,
-            username VARCHAR(255) UNIQUE NOT NULL,
-            password VARCHAR(255) NOT NULL,
-            "isAdmin" BOOLEAN DEFAULT false
-        );
-        CREATE TABLE products (
-            id SERIAL PRIMARY KEY,
-            title VARCHAR(255) NOT NULL,
-            price INTEGER,
-            category VARCHAR(255) NOT NULL,
-            description TEXT NOT NULL,
-            inventory INTEGER,
-            "imgURL" TEXT NOT NULL
-        );
-        CREATE TABLE reviews (
-            id SERIAL PRIMARY KEY,
-            "creatorId" INTEGER REFERENCES users(id),
-            "productId" INTEGER REFERENCES products(id),
-            message TEXT NOT NULL
-        );
-        CREATE TABLE carts(
-            id SERIAL PRIMARY KEY,
-            "userId" INTEGER REFERENCES users(id),
-            "isPurchased" BOOLEAN DEFAULT FALSE
-        );
-        CREATE TABLE carts_products(
-            id SERIAL PRIMARY KEY,
-            count INTEGER NOT NULL,
-            price INTEGER NOT NULL,
-            "cartId" INTEGER REFERENCES carts(id),
-            "productId" INTEGER REFERENCES products(id)
-        );
+            CREATE TABLE users(
+                id SERIAL PRIMARY KEY,
+                email VARCHAR(255) UNIQUE NOT NULL,
+                username VARCHAR(255) UNIQUE NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                "isAdmin" BOOLEAN DEFAULT false
+            );
         `);
         console.log('Finished building tables!');
     } catch (error) {

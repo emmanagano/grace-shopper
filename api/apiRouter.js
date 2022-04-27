@@ -7,6 +7,7 @@ const express = require("express");
 const apiRouter = express.Router();
 
 const jwt = require('jsonwebtoken');
+const { getUserByUsername } = require("../db/user");
 const userRouter = require("./userRouter");
 
 // const { getUserByUsername } = require('./db/users');
@@ -22,8 +23,8 @@ apiRouter.use(async (req, res, next) => {
 		return next();
 	}
 
-	// const user = await getUserByUsername(_user.username);
-	// req.user = user;
+	const user = await getUserByUsername(_user.username);
+	req.user = user;
 
 	next();
 });
