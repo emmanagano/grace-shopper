@@ -21,9 +21,7 @@ const Register = ({setUser}) => {
         }
         try {
             const info = await fetchRegister(email, username, password);
-            if(info.message) {
-                setError(info.message)
-            }
+            setError(info.message)
             localStorage.setItem("token", info.token);
 			setEmail("");
 			setUsername("");
