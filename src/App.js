@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { fetchProducts, fetchUserMe } from "./api";
+import Accessories from "./components/categories/Accessories";
+import Kids from "./components/categories/Kids";
+import Men from "./components/categories/Men";
+import Women from "./components/categories/Women";
 import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
@@ -57,6 +61,38 @@ const App = () => {
                         products={products} 
                     />
                 } 
+            />
+            <Route
+                path="/categories/women"
+                element={
+                    <Women 
+                        products={products} 
+                    />
+                }
+            />
+            <Route 
+                path="/categories/men" 
+                element={
+                    <Men 
+                        products={products} 
+                    />
+                } 
+            />
+            <Route 
+                path="/categories/kids" 
+                element={
+                    <Kids 
+                        products={products} 
+                    />
+                } 
+            />
+            <Route
+                path="/categories/accessories"
+                element={
+                    <Accessories 
+                        products={products} 
+                    />
+                }
             />
         </Routes>
     </>)

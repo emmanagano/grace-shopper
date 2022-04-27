@@ -1,18 +1,20 @@
-const { useNavigate, Link } = require('react-router-dom');
+import { useNavigate } from 'react-router-dom';
+import MainCategories from '../MainCategories';
+import { addToCart } from '../../api';
 import { NotificationManager } from 'react-notifications';
 
-import './css/Products.css';
-import MainCategories from './MainCategories';
-
-const Products = ({ products }) => {
+const Women = ({ products }) => {
   const navigate = useNavigate();
-
-
+  const filteredProducts = products.filter((product) => {
+    if (product.category === 'women') {
+      return true;
+    }
+  });
   return (
     <div className="products_main">
       <MainCategories />
       <div className="products_container">
-        {products.map((product) => {
+        {filteredProducts.map((product) => {
           return (
             <div key={product.id}>
               <div
@@ -27,7 +29,14 @@ const Products = ({ products }) => {
               </div>
               <button
                 onClick={(e) => {
-                  console.log("hi")
+                  // const response = addToCart(product.price, product.id, 1);
+                  // if (response) {
+                  //   NotificationManager.success(
+                  //     'Added 1 item(s) to cart!',
+                  //     'Success!',
+                  //     1500
+                  //   );
+                  // }
                 }}
               >
                 Add to cart
@@ -40,4 +49,4 @@ const Products = ({ products }) => {
   );
 };
 
-export default Products;
+export default Women;
