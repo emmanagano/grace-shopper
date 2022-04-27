@@ -3,7 +3,8 @@ const jwt = require('jsonwebtoken');
 const { 
     getUserByUsername, 
     getUserByEmail, 
-    createUser
+    createUser,
+    getUser
 } = require('../db/user');
 const userRouter = express.Router();
 
@@ -51,5 +52,41 @@ userRouter.post('/register', async (req, res, next) => {
         res.send({error: error.message})
     }
 });
+userRouter.post('/login', async (req, res, next) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        next({
+            name: 'MissingCredentialsError',
+            message: 'Please supply both a username and password',
+        });
+    }
+
+    try {
+        const user = await getUser({ username, password });
+
+        if (!user) {
+            res.send({ error: 'No user found' });
+        }
+
+        const token = jwt.sign(
+        {
+            id: user.id,
+            username: user.username,
+        },
+        process.env.SECRET_KEY
+        );
+
+        user.token = token;
+
+        res.send({
+            message: "you're logged in!!!",
+            token,
+        });
+    } catch (error) {
+        res.send({error: error.message});
+    }
+});
+
 
 module.exports = userRouter;
