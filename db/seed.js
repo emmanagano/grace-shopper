@@ -1,4 +1,5 @@
 const { client } = require('./client');
+const { createUser } = require('./user');
 
 async function dropTables() {
     try {
@@ -15,7 +16,8 @@ async function dropTables() {
     } catch (error) {
         throw error;
     }
-}
+};
+
 async function createTables() {
     try {
         console.log('Starting to build tables...');
@@ -61,7 +63,54 @@ async function createTables() {
         console.error('Error building tables!');
         throw error;
     }
-}
+};
+
+async function createInitialUsers() {
+    try {
+        console.log('Starting to create users...');
+        await createUser({
+        email: 'albert@gmail.com',
+        username: 'albert',
+        password: 'bertie99',
+        isAdmin: false,
+        });
+        await createUser({
+        email: 'sandra@gmail.com',
+        username: 'sandra',
+        password: '2sandy4me',
+        isAdmin: false,
+        });
+        await createUser({
+        email: 'glamgal@gmail.com',
+        username: 'glamgal',
+        password: 'soglam',
+        isAdmin: false,
+        });
+        await createUser({
+        email: 'jacob.admin@gmail.com',
+        username: 'jacob.admin',
+        password: 'jacob.admin',
+        isAdmin: true,
+        });
+        await createUser({
+        email: 'emma.admin@gmail.com',
+        username: 'emma.admin',
+        password: 'emma.admin',
+        isAdmin: true,
+        });
+        await createUser({
+        email: 'carmen.admin@gmail.com',
+        username: 'carmen.admin',
+        password: 'carmen.admin',
+        isAdmin: true,
+        });
+        console.log('Finished creating users!');
+    } catch (error) {
+        console.error('Error creating users!');
+        throw error;
+    }
+};
+
 async function testDB() {
     try {
         console.log('Starting to test database...');
@@ -122,13 +171,14 @@ async function testDB() {
         console.error('Error testing database!');
         throw error;
     }
-}
+};
+
 async function rebuildDB() {
     try {
         client.connect();
         await createTables();
         await dropTables();
-        // await createInitialUsers();
+        await createInitialUsers();
         // await createInitialProducts();
         // await createInitialReviews();
         // await createInitialCarts();
@@ -136,7 +186,8 @@ async function rebuildDB() {
     } catch (error) {
         throw error;
     }
-}
+};
+
 rebuildDB()
     .then(testDB)
     .catch(console.error)
