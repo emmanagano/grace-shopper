@@ -1,5 +1,5 @@
 const { client } = require('./client');
-const { createUser } = require('./user');
+const { createUser, getUserByUsername } = require('./user');
 
 async function dropTables() {
     try {
@@ -118,7 +118,7 @@ async function testDB() {
         // const allUsers = await getAllUsers();
         // console.log('getAllUsers', allUsers);
 
-        // const userByUsername = await getUserByUsername('albert');
+        // const userByUsername = await getUserByUsername({username:'albert'});
         // console.log('getUserByUsername', userByUsername);
 
         // const user = await getUser({ username: 'albert', password: 'bertie99' });
@@ -176,8 +176,8 @@ async function testDB() {
 async function rebuildDB() {
     try {
         client.connect();
-        await createTables();
         await dropTables();
+        await createTables();
         await createInitialUsers();
         // await createInitialProducts();
         // await createInitialReviews();

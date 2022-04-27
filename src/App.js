@@ -1,6 +1,31 @@
+import { useState } from "react";
+import Home from "./components/Home";
+import Register from "./components/Register";
+
+const { Routes, Route } = require("react-router-dom")
 
 const App = () => {
-    return <h1>Hell World!</h1>
+    const [user, setUser] = useState({});
+    return (<>
+        <Routes>
+            <Route 
+                path="/" 
+                element={
+                    <Home 
+                        user={user}
+                    />
+                } 
+            />
+            <Route 
+                path="/register" 
+                element={
+                    <Register 
+                        setUser={setUser}
+                    />
+                } 
+            />
+        </Routes>
+    </>)
 }
 
 export default App;
