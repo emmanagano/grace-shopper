@@ -37,9 +37,9 @@ const getUserByUsername = async ({username}) => {
 const getUserByEmail = async ({email}) => {
     try {
         const {rows: [user]} = await client.query(`
-        SELECT * FROM users
-        WHERE email = $1;
-        `,[email]
+            SELECT * FROM users
+            WHERE email = $1;
+            `,[email]
         );
         return user;
     } catch (error) {
@@ -51,7 +51,7 @@ const getUser = async ({ username, password }) => {
     try {
         const user = await getUserByUsername({username});
         if (!user) {
-            throw new Error('No user with that username exists');
+            return
         }
 
         const hashedPassword = user.password;
