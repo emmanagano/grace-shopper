@@ -35,7 +35,7 @@ app.use(express.json());
 //     next();
 // });
 
-const apiRouter = require('./api');
+const apiRouter = require('./api/apiRouter');
 app.use('/api', apiRouter);
 
 app.use((err, req, res, next) => {
