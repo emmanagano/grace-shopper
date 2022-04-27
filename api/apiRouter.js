@@ -9,6 +9,7 @@ const apiRouter = express.Router();
 
 const jwt = require('jsonwebtoken');
 const { getUserByUsername } = require("../db/user");
+const productRouter = require('./productRouter');
 const userRouter = require("./userRouter");
 
 apiRouter.use(async (req, res, next) => {
@@ -27,7 +28,7 @@ apiRouter.use(async (req, res, next) => {
 });
 
 
-// apiRouter.use("/products", productRouter);
+apiRouter.use("/products", productRouter);
 apiRouter.use("/user", userRouter);
 // apiRouter.use("/reviews", reviewsRouter);
 // apiRouter.use("/cart", cartsRouter);

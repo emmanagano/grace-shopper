@@ -1,5 +1,5 @@
-const BASE_URL = 'https://intense-crag-00374.herokuapp.com/api';
-// const BASE_URL = 'http://localhost:3001/api';
+// const BASE_URL = 'https://intense-crag-00374.herokuapp.com/api';
+const BASE_URL = 'http://localhost:3001/api';
 const lstoken = localStorage.getItem("token");
 
 export async function fetchRegister (email, username, password) {
@@ -57,4 +57,15 @@ export async function fetchUserMe () {
     } catch (error) {
         throw error;
     }
-}
+};
+
+export async function fetchProducts () {
+    try {
+        const response = await fetch(`${BASE_URL}/products`);
+        const info = await response.json();
+        console.log(info);
+        return info.products;
+    } catch (error) {
+        throw error;
+    }
+};

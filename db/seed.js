@@ -1,10 +1,13 @@
 const { client } = require('./client');
 const { createUser, getUserByUsername, getUser } = require('./user');
+const productData = require("./productData");
+const { createProduct, getProducts } = require('./product');
 
 async function dropTables() {
     try {
         console.log("Starting to drop tables")
         await client.query(`
+            DROP TABLE IF EXISTS products;
             DROP TABLE IF EXISTS users;
         `);
 
@@ -25,6 +28,15 @@ async function createTables() {
                 username VARCHAR(255) UNIQUE NOT NULL,
                 password VARCHAR(255) NOT NULL,
                 "isAdmin" BOOLEAN DEFAULT false
+            );
+            CREATE TABLE products (
+                id SERIAL PRIMARY KEY,
+                title VARCHAR(255) NOT NULL,
+                price INTEGER,
+                category VARCHAR(255) NOT NULL,
+                description TEXT NOT NULL,
+                inventory INTEGER,
+                "imgURL" TEXT NOT NULL
             );
         `);
         console.log('Finished building tables!');
@@ -79,6 +91,22 @@ async function createInitialUsers() {
         throw error;
     }
 };
+async function createInitialProducts () {
+    try {
+        for(const product of productData) {
+            await createProduct({
+                title: product.title,
+                price: product.price,
+                category: product.category,
+                description: product.description,
+                inventory: product.inventory,
+                imgURL: product.imgURL
+            })
+        }
+    } catch (error) {
+        throw error;
+    }
+};
 
 async function testDB() {
     try {
@@ -87,11 +115,11 @@ async function testDB() {
         // const allUsers = await getAllUsers();
         // console.log('getAllUsers', allUsers);
 
-        const userByUsername = await getUserByUsername({username:'albert'});
-        console.log('getUserByUsername', userByUsername);
+        // const userByUsername = await getUserByUsername({username:'albert'});
+        // console.log('getUserByUsername', userByUsername);
 
-        const user = await getUser({ username: 'albert', password: 'bertie99' });
-        console.log('here are users', user);
+        // const user = await getUser({ username: 'albert', password: 'bertie99' });
+        // console.log('here are users', user);
 
         // const deletedProduct = await destroyProduct(4);
         // console.log('destroyProduct', deletedProduct);
@@ -148,7 +176,7 @@ async function rebuildDB() {
         await dropTables();
         await createTables();
         await createInitialUsers();
-        // await createInitialProducts();
+        await createInitialProducts();
         // await createInitialReviews();
         // await createInitialCarts();
         // await createInitialCartProducts();s
