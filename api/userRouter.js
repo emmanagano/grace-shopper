@@ -9,6 +9,19 @@ const {
 } = require('../db/user');
 const userRouter = express.Router();
 
+userRouter.get('/me', async(req, res) => {
+    try {
+        if(req.user) {
+            res.send(req.user)
+            return
+        }
+    } catch (error) {
+        res.send({
+            error: error.message
+        })
+    }
+});
+
 userRouter.post('/register', async (req, res, next) => {
     const { email, username, password } = req.body;
     const isAdmin = false;
@@ -65,7 +78,7 @@ userRouter.post('/login', async (req, res, next) => {
     }
 
     try {
-        const user = await getUser({ username, password });
+        const user = await getUser({username:username, password:password});
         if (!user) {
             res.send({ error: 'No user found' });
         }

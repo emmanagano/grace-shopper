@@ -25,7 +25,7 @@ const Register = ({setUser}) => {
                 setError(info.message)
             }
             console.log(info);
-            // localStorage.setItem("token", info.user.token);
+            localStorage.setItem("token", info.user.token);
 			setEmail("");
 			setUsername("");
 			setPassword("");

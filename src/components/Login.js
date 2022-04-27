@@ -14,13 +14,12 @@ const Login = ({setUser}) => {
             const response = await fetchLogin(username,password);
             console.log(response);
             if(response) {
-                setUser(response);
                 history('/');
             };
-            if (!response) {
-                setError(response.error);
-            };
-            
+            // if (!response) {
+            //     setError(response.error);
+            // };
+            setUser(response);
         } catch (error) {
             throw error;
         }

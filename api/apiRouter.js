@@ -14,17 +14,15 @@ const userRouter = require("./userRouter");
 apiRouter.use(async (req, res, next) => {
 	if (!req.headers.authorization) {
 		return next();
-	}
-	const auth = req.headers.authorization.split(' ')[1];
+	};
+	const auth = req.headers.authorization.split(" ")[1];
 	const _user = jwt.decode(auth, process.env.SECRET_KEY);
-
 	if (!_user) {
 		return next();
 	}
 
-	const user = await getUserByUsername(_user.username);
+	const user = await getUserByUsername({username:_user.username});
 	req.user = user;
-
 	next();
 });
 

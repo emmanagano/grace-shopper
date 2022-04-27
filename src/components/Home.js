@@ -2,7 +2,7 @@ const Home = ({user}) => {
     console.log(user)
 	return (
 		<>
-			<h2>Welcome {user.username}!</h2>
+			<h2>Welcome {user?.username}!</h2>
 			<p>
 				J. E. C. --- Just Enough Clothes makes people feel good to look good.
 			</p>
