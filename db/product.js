@@ -32,7 +32,21 @@ const getProducts = async () => {
     }
 };
 
+const getProductById = async (id) => {
+    try {
+        const { rows: product } = await client.query(`
+            SELECT * FROM products
+            WHERE id = $1
+        `,[id]
+        );
+        return product;
+    } catch (error) {
+        throw error;
+    }
+};
+
 module.exports = {
     createProduct,
-    getProducts
+    getProducts,
+    getProductById
 }

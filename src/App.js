@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Products from "./components/Products";
 import Register from "./components/Register";
+import SingleProduct from "./components/SingleProduct";
 
 const { Routes, Route } = require("react-router-dom")
 
@@ -60,6 +61,12 @@ const App = () => {
                     <Products 
                         products={products} 
                     />
+                } 
+            />
+            <Route 
+                path="products/:id" 
+                element={
+                    <SingleProduct />
                 } 
             />
             <Route

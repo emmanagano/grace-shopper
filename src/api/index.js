@@ -69,3 +69,13 @@ export async function fetchProducts () {
         throw error;
     }
 };
+
+export async function fetchProductById (id) {
+    try {
+        const response = await fetch(`${BASE_URL}/products/${id}`);
+        const info = await response.json();
+        return info.product;
+    } catch (error) {
+        throw error;
+    }
+};
