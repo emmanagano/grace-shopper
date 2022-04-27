@@ -14,7 +14,7 @@ export async function fetchRegister (email, username, password) {
             })
         });
         const info = await response.json();
-        return info.user;
+        return info;
     } catch (error) {
         throw error;
     }
