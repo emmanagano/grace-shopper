@@ -7,6 +7,7 @@ const { Routes, Route } = require("react-router-dom")
 
 const App = () => {
     const [user, setUser] = useState({});
+    console.log(user);
     return (<>
         <Routes>
             <Route 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchLogin } from "../api";
 
-const Login = () => {
+const Login = ({setUser}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -12,7 +12,13 @@ const Login = () => {
         e.preventDefault();
         try {
             const response = await fetchLogin(username,password);
-            console.log("response", response)
+            if(response) {
+                setUser(response)
+            };
+            if (response.error) {
+                setError(info.error);
+            };
+            
         } catch (error) {
             throw error;
         }

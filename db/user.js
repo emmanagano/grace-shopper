@@ -51,15 +51,14 @@ const getUser = async ({ username, password }) => {
     try {
         const user = await getUserByUsername({username});
         if (!user) {
-        throw new Error('No user with that username exists');
+            throw new Error('No user with that username exists');
         }
 
         const hashedPassword = user.password;
         const passwordMatch = await bcrypt.compare(password, hashedPassword);
-        console.log(passwordMatch);
         if (passwordMatch) {
-        delete user.password;
-        return user;
+            delete user.password;
+            return user;
         }
     } catch (error) {
         throw error;

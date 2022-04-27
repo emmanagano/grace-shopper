@@ -52,6 +52,7 @@ userRouter.post('/register', async (req, res, next) => {
         res.send({error: error.message})
     }
 });
+
 userRouter.post('/login', async (req, res, next) => {
     const { username, password } = req.body;
 
@@ -64,7 +65,6 @@ userRouter.post('/login', async (req, res, next) => {
 
     try {
         const user = await getUser({ username, password });
-
         if (!user) {
             res.send({ error: 'No user found' });
         }
@@ -80,8 +80,7 @@ userRouter.post('/login', async (req, res, next) => {
         user.token = token;
 
         res.send({
-            message: "you're logged in!!!",
-            token,
+            user
         });
     } catch (error) {
         res.send({error: error.message});

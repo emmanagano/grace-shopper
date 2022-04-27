@@ -1,4 +1,6 @@
 const BASE_URL = 'https://intense-crag-00374.herokuapp.com/api';
+// const BASE_URL = 'http://localhost:3001/api';
+
 
 export async function fetchRegister (email, username, password) {
     try {
@@ -33,9 +35,9 @@ export async function fetchLogin (username, password) {
             })
         });
         const info = await response.json();
-        localStorage.setItem('token', info.token);
-        return info;
+        localStorage.setItem('token', info.user.token);
+        return info.user;
     } catch (error) {
         throw error;
     }
-}
+};
