@@ -10,7 +10,7 @@ const userRouter = express.Router();
 
 userRouter.post('/register', async (req, res, next) => {
     const { email, username, password } = req.body;
-
+    const isAdmin = false;
     try {
         const user = await getUserByUsername({username});
 
@@ -32,7 +32,7 @@ userRouter.post('/register', async (req, res, next) => {
             return;
         }
 
-        const newUser = await createUser({ email, username, password });
+        const newUser = await createUser({ email, username, password, isAdmin });
 
         const token = jwt.sign(
         {

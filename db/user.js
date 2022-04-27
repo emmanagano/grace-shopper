@@ -10,7 +10,7 @@ const createUser = async ({ email, username, password, isAdmin }) => {
         `
             INSERT INTO users (email, username, password, "isAdmin")
             VALUES ($1, $2, $3, $4)
-            RETURNING id, email, username;
+            RETURNING id, email, username, "isAdmin";
 
 
             `,

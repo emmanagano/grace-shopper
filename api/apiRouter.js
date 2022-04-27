@@ -10,8 +10,6 @@ const jwt = require('jsonwebtoken');
 const { getUserByUsername } = require("../db/user");
 const userRouter = require("./userRouter");
 
-// const { getUserByUsername } = require('./db/users');
-
 apiRouter.use(async (req, res, next) => {
 	if (!req.headers.authorization) {
 		return next();
@@ -25,7 +23,7 @@ apiRouter.use(async (req, res, next) => {
 
 	const user = await getUserByUsername(_user.username);
 	req.user = user;
-
+	
 	next();
 });
 

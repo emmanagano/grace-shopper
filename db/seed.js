@@ -1,5 +1,5 @@
 const { client } = require('./client');
-const { createUser, getUserByUsername } = require('./user');
+const { createUser, getUserByUsername, getUser } = require('./user');
 
 async function dropTables() {
     try {
@@ -19,7 +19,7 @@ async function createTables() {
         console.log('Starting to build tables...');
 
         await client.query(`
-            CREATE TABLE users(
+            CREATE TABLE users (
                 id SERIAL PRIMARY KEY,
                 email VARCHAR(255) UNIQUE NOT NULL,
                 username VARCHAR(255) UNIQUE NOT NULL,
@@ -38,40 +38,40 @@ async function createInitialUsers() {
     try {
         console.log('Starting to create users...');
         await createUser({
-        email: 'albert@gmail.com',
-        username: 'albert',
-        password: 'bertie99',
-        isAdmin: false,
+            email: 'albert@gmail.com',
+            username: 'albert',
+            password: 'bertie99',
+            isAdmin: false,
         });
         await createUser({
-        email: 'sandra@gmail.com',
-        username: 'sandra',
-        password: '2sandy4me',
-        isAdmin: false,
+            email: 'sandra@gmail.com',
+            username: 'sandra',
+            password: '2sandy4me',
+            isAdmin: false,
         });
         await createUser({
-        email: 'glamgal@gmail.com',
-        username: 'glamgal',
-        password: 'soglam',
-        isAdmin: false,
+            email: 'glamgal@gmail.com',
+            username: 'glamgal',
+            password: 'soglam',
+            isAdmin: false,
         });
         await createUser({
-        email: 'jacob.admin@gmail.com',
-        username: 'jacob.admin',
-        password: 'jacob.admin',
-        isAdmin: true,
+            email: 'jacob.admin@gmail.com',
+            username: 'jacob.admin',
+            password: 'jacob.admin',
+            isAdmin: true,
         });
         await createUser({
-        email: 'emma.admin@gmail.com',
-        username: 'emma.admin',
-        password: 'emma.admin',
-        isAdmin: true,
+            email: 'emma.admin@gmail.com',
+            username: 'emma.admin',
+            password: 'emma.admin',
+            isAdmin: true,
         });
         await createUser({
-        email: 'carmen.admin@gmail.com',
-        username: 'carmen.admin',
-        password: 'carmen.admin',
-        isAdmin: true,
+            email: 'carmen.admin@gmail.com',
+            username: 'carmen.admin',
+            password: 'carmen.admin',
+            isAdmin: true,
         });
         console.log('Finished creating users!');
     } catch (error) {
@@ -87,11 +87,11 @@ async function testDB() {
         // const allUsers = await getAllUsers();
         // console.log('getAllUsers', allUsers);
 
-        // const userByUsername = await getUserByUsername({username:'albert'});
-        // console.log('getUserByUsername', userByUsername);
+        const userByUsername = await getUserByUsername({username:'albert'});
+        console.log('getUserByUsername', userByUsername);
 
-        // const user = await getUser({ username: 'albert', password: 'bertie99' });
-        // console.log('here are users', user);
+        const user = await getUser({ username: 'albert', password: 'bertie99' });
+        console.log('here are users', user);
 
         // const deletedProduct = await destroyProduct(4);
         // console.log('destroyProduct', deletedProduct);
