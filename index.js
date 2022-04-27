@@ -38,6 +38,10 @@ app.use(express.json());
 const apiRouter = require('./api/apiRouter');
 app.use('/api', apiRouter);
 
+app.get("*", (req, res) => {
+    res.sendFile(__dirname + "/build/index.html");
+});
+
 app.use((err, req, res, next) => {
     res.status(400).send({
         name: err.name,
