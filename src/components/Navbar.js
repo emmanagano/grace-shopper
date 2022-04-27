@@ -4,7 +4,7 @@ import {BsCart2} from 'react-icons/bs';
 
 const Navbar = ({setUser, user}) => {
   console.log(user);
-  if(user) {
+  if(user?.username) {
     return (
       <div className="navbar_main">
         <div className="navbar_logo">
