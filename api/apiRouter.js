@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 // const cartsRouter = require("./cartsRouter");
 // const productRouter = require("./productRouter");
@@ -23,7 +24,7 @@ apiRouter.use(async (req, res, next) => {
 
 	const user = await getUserByUsername(_user.username);
 	req.user = user;
-	
+
 	next();
 });
 
