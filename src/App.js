@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { fetchProducts, fetchUserMe } from "./api";
+import { createCart, fetchProducts, fetchUserMe } from "./api";
+import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+
+
 import Accessories from "./components/categories/Accessories";
 import Kids from "./components/categories/Kids";
 import Men from "./components/categories/Men";
@@ -10,6 +14,7 @@ import Navbar from "./components/Navbar";
 import Products from "./components/Products";
 import Register from "./components/Register";
 import SingleProduct from "./components/SingleProduct";
+import Cart from "./components/Cart";
 
 const { Routes, Route } = require("react-router-dom")
 
@@ -25,6 +30,7 @@ const App = () => {
         .then((product) => {
             setProducts(product);
         });
+        createCart();
     },[]);
     console.log(products);
     return (<>
@@ -101,7 +107,12 @@ const App = () => {
                     />
                 }
             />
+            <Route 
+                path="/cart" 
+                element={<Cart />} 
+            />
         </Routes>
+        <NotificationContainer />
     </>)
 }
 

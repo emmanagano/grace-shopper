@@ -56,16 +56,16 @@ const SingleProduct = () => {
                     onChange={(e) => setCount(e.target.value)}
                 />
                 <button
-                    // onClick={() => {
-                    // const response = addToCart(product.price, product.id, count);
-                    // if (response) {
-                    //     NotificationManager.success(
-                    //     `Added ${count} item(s) to cart!`,
-                    //     'Success!',
-                    //     1500
-                    //     );
-                    // }
-                    // }}
+                    onClick={() => {
+                        const response = addToCart(product.price, product.id, count);
+                        if (response) {
+                            NotificationManager.success(
+                            `Added ${count} item(s) to cart!`,
+                            'Success!',
+                            1500
+                            );
+                        }
+                    }}
                 >
                     Add to cart
             </button>

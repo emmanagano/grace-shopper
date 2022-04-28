@@ -45,8 +45,24 @@ const getProductById = async (id) => {
     }
 };
 
+// const getProductsByCartId = async (cartId) => {
+//     try {
+//         const { rows: products } = await client.query(`
+//             SELECT products.*, carts_products.price, carts_products.id, carts_products.count
+//             FROM products
+//             JOIN carts_products 
+//             ON products.id = carts_products."productId"
+//             WHERE "cartId" = $1;
+//         `[cartId])
+//         console.log(products,"getProductsByCartId")
+//         return products;
+//     } catch (error) {
+//         throw error;
+//     }
+// };
+
 module.exports = {
     createProduct,
     getProducts,
-    getProductById
+    getProductById,
 }

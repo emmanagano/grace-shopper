@@ -1,5 +1,6 @@
 const { useNavigate, Link } = require('react-router-dom');
 import { NotificationManager } from 'react-notifications';
+import { addToCart } from '../api';
 
 import './css/Products.css';
 import MainCategories from './MainCategories';
@@ -27,7 +28,21 @@ const Products = ({ products }) => {
               </div>
               <button
                 onClick={(e) => {
-                  console.log("hi")
+                  const response = addToCart(
+                    product.price,
+                    product.id,
+                    1,
+                    product.imgURL,
+                    product.title,
+                    product.description
+                  );
+                  if (response) {
+                    NotificationManager.success(
+                      'Added 1 item(s) to cart!',
+                      'Success!',
+                      1500
+                    );
+                  }
                 }}
               >
                 Add to cart

@@ -89,3 +89,117 @@ export async function fetchReviews (id) {
         throw error;
     }
 };
+
+export const addToCart = async (
+    price,
+    productId,
+    count,
+    imgURL,
+    title,
+    description
+) => {
+    console.log(price,
+        productId,
+        count,
+        imgURL,
+        title,
+        description)
+    try {
+    if (!lstoken) {
+        const productArr = localStorage.getItem('products');
+        if (!productArr) {
+        localStorage.setItem(
+            'products',
+            JSON.stringify([
+            { price, productId, count, imgURL, title, description },
+            ])
+        );
+        }
+        productArr.push({ price, productId, count, imgURL, title, description });
+        localStorage.setItem('products', JSON.stringify(productArr));
+        return;
+    }
+    const response = await fetch(`${BASE_URL}/cart`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${lstoken}`,
+            },
+        body: JSON.stringify({
+            price,
+            productId,
+            count,
+        }),
+    });
+    const info = await response.json();
+    console.log(info);
+    return info;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const createCart = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/cart/create`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${lstoken}`,
+            },
+        });
+        const info = response.json();
+        return info;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const getProductsFromCart = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/cart/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${lstoken}`,
+            },
+        });
+        const info = await response.json();
+        return info.cart;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const RemoveProductFromCart = async (id) => {
+    try {
+    const response = await fetch(`${BASE_URL}/cart/${id}`, {
+        method: 'DELETE',
+        headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${lstoken}`,
+        },
+    });
+    const info = await response.json();
+    return info;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const editProductCount = async (count, id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/cart/${id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${lstoken}`,
+        },
+        body: JSON.stringify({
+            count,
+        }),
+        });
+        const info = response.json();
+        return info;
+    } catch (error) {
+        throw error;
+    }
+};
