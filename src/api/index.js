@@ -1,4 +1,5 @@
-const BASE_URL = 'http://localhost:3001/api';
+// const BASE_URL = 'http://localhost:3001/api';
+const BASE_URL = "https://intense-crag-00374.herokuapp.com/api";
 const lstoken = localStorage.getItem('token');
 
 export const fetchAdmin = async () => {
