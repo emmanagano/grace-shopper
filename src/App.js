@@ -1,120 +1,119 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import './app.css';
-import { fetchProducts, fetchUser } from './api';
-import { createCart } from './api';
-import Cart from './Components/Cart';
-import Home from './Components/Home';
-import Login from './Components/Login';
-import Navbar from './Components/Navbar';
-import Products from './Components/Products';
-import Register from './Components/Register';
-import SingleProduct from './Components/SingleProduct';
-import Women from './Components/categories/Women';
-import Men from './Components/categories/Men';
-import Kids from './Components/categories/Kids';
-import Accessories from './Components/categories/Accessories';
+import { useEffect, useState } from "react";
+import { createCart, fetchProducts, fetchUserMe } from "./api";
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import Checkout from './Components/Checkout';
-import Admin from './Components/Admin';
-import CreateAdmin from './Components/CreateAdmin';
-import CreateProducts from './Components/CreateProducts';
-import ReadAdminTable from './Components/ReadAdminTable';
-import ReadProductTable from './Components/ReadProductTable';
+
+
+import Accessories from "./components/categories/Accessories";
+import Kids from "./components/categories/Kids";
+import Men from "./components/categories/Men";
+import Women from "./components/categories/Women";
+import Home from "./components/Home";
+import Login from "./components/Login";
+import Navbar from "./components/Navbar";
+import Products from "./components/Products";
+import Register from "./components/Register";
+import SingleProduct from "./components/SingleProduct";
+import Cart from "./components/Cart";
+
+const { Routes, Route } = require("react-router-dom")
 
 const App = () => {
-  const [products, setProducts] = useState([]);
-  const [cartProducts, setCartProducts] = useState([]);
-  const [userInfo, setUserInfo] = useState({});
-  const [checkoutProducts, setCheckoutProducts] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [token, setToken] = useState([]);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const user = await fetchUser();
-      console.log(user);
-      if (user) {
-        setUserInfo(user);
-      }
-    };
-    getUser();
-    createCart();
-    const lstoken = localStorage.getItem('token');
-    setToken(lstoken);
-    fetchProducts().then((product) => {
-      setProducts(product);
-    });
-  }, []);
-  return (
-    <>
-      <Navbar setUserInfo={setUserInfo} userInfo={userInfo} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/products"
-          element={<Products products={products} token={token} />}
+    const [user, setUser] = useState({});
+    const [products, setProducts] = useState([]);
+    useEffect(()=>{
+        fetchUserMe()
+        .then(user => {
+            setUser(user);
+        });
+        fetchProducts()
+        .then((product) => {
+            setProducts(product);
+        });
+        createCart();
+    },[]);
+    console.log(products);
+    return (<>
+        <Navbar 
+            setUser={setUser}
+            user={user}
         />
-        <Route
-          path="/categories/women"
-          element={<Women products={products} token={token} />}
-        />
-        <Route
-          path="/categories/men"
-          element={<Men products={products} token={token} />}
-        />
-        <Route
-          path="/categories/kids"
-          element={<Kids products={products} token={token} />}
-        />
-        <Route
-          path="/categories/accessories"
-          element={<Accessories products={products} />}
-        />
-        <Route path="products/:id" element={<SingleProduct token={token} />} />
-        <Route path="/login" element={<Login setUserInfo={setUserInfo} />} />
-        <Route path="/register" element={<Register />} />
-        <Route
-          path="/cart"
-          element={
-            <Cart
-              setCheckoutProducts={setCheckoutProducts}
-              setTotal={setTotal}
-              setCartProducts={setCartProducts}
+        <Routes>
+            <Route 
+                path="/" 
+                element={
+                    <Home 
+                        user={user}
+                    />
+                } 
             />
-          }
-        />
-        <Route
-          path="/checkout"
-          element={
-            <Checkout
-              checkoutProducts={checkoutProducts}
-              total={total}
-              cartProducts={cartProducts}
+            <Route 
+                path="/register" 
+                element={
+                    <Register/>
+                } 
             />
-          }
-        />
-        <Route path="/admin" element={<Admin />} />
-        <Route
-          path="/admin/createAdmin"
-          element={<CreateAdmin token={token} />}
-        />
-        <Route
-          path="/admin/createProduct"
-          element={
-            <CreateProducts
-              products={products}
-              setProducts={setProducts}
-              token={token}
+            <Route
+                path="/login"
+                element={
+                    <Login 
+                        setUser={setUser}
+                    />
+                }
             />
-          }
-        />
-      </Routes>
-      <NotificationContainer />
-    </>
-  );
-};
+            <Route 
+                path="/products" 
+                element={
+                    <Products 
+                        products={products} 
+                    />
+                } 
+            />
+            <Route 
+                path="products/:id" 
+                element={
+                    <SingleProduct />
+                } 
+            />
+            <Route
+                path="/categories/women"
+                element={
+                    <Women 
+                        products={products} 
+                    />
+                }
+            />
+            <Route 
+                path="/categories/men" 
+                element={
+                    <Men 
+                        products={products} 
+                    />
+                } 
+            />
+            <Route 
+                path="/categories/kids" 
+                element={
+                    <Kids 
+                        products={products} 
+                    />
+                } 
+            />
+            <Route
+                path="/categories/accessories"
+                element={
+                    <Accessories 
+                        products={products} 
+                    />
+                }
+            />
+            <Route 
+                path="/cart" 
+                element={<Cart />} 
+            />
+        </Routes>
+        <NotificationContainer />
+    </>)
+}
 
 export default App;

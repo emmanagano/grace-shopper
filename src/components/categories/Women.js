@@ -3,7 +3,7 @@ import MainCategories from '../MainCategories';
 import { addToCart } from '../../api';
 import { NotificationManager } from 'react-notifications';
 
-const Women = ({ products, token }) => {
+const Women = ({ products }) => {
   const navigate = useNavigate();
   const filteredProducts = products.filter((product) => {
     if (product.category === 'women') {
@@ -29,23 +29,14 @@ const Women = ({ products, token }) => {
               </div>
               <button
                 onClick={(e) => {
-                  const response = addToCart(
-                    token,
-                    product.price,
-                    product.id,
-                    1,
-                    product.imgURL,
-                    product.title,
-                    product.description,
-                    product.inventory
-                  );
-                  if (response) {
-                    NotificationManager.success(
-                      'Added 1 item(s) to cart!',
-                      'Success!',
-                      1500
-                    );
-                  }
+                  // const response = addToCart(product.price, product.id, 1);
+                  // if (response) {
+                  //   NotificationManager.success(
+                  //     'Added 1 item(s) to cart!',
+                  //     'Success!',
+                  //     1500
+                  //   );
+                  // }
                 }}
               >
                 Add to cart

@@ -26,6 +26,6 @@ const MainCategories = () => {
             </Link>
         </div>
     )
-}
+};
 
 export default MainCategories;
