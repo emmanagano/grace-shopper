@@ -12,9 +12,9 @@ const {
 } = require('../db/cart');
 const { requireUser } = require('./utils');
 
-const cartsRouter = express.Router();
+const cartRouter = express.Router();
 
-cartsRouter.post('/', requireUser, async (req, res, next) => {
+cartRouter.post('/', requireUser, async (req, res, next) => {
   const { id } = req.user;
   const { count, price, productId } = req.body;
   let found = false;
@@ -57,7 +57,7 @@ cartsRouter.post('/', requireUser, async (req, res, next) => {
   }
 });
 
-cartsRouter.delete('/:id', requireUser, async (req, res) => {
+cartRouter.delete('/:id', requireUser, async (req, res) => {
   try {
     const user = req.user;
     const id = req.params.id;
@@ -71,7 +71,7 @@ cartsRouter.delete('/:id', requireUser, async (req, res) => {
   }
 });
 
-cartsRouter.get('/create', requireUser, async (req, res) => {
+cartRouter.get('/create', requireUser, async (req, res) => {
   try {
     const user = req.user;
     if (!user) {
@@ -94,7 +94,7 @@ cartsRouter.get('/create', requireUser, async (req, res) => {
   }
 });
 
-cartsRouter.patch('/purchase', requireUser, async (req, res) => {
+cartRouter.patch('/purchase', requireUser, async (req, res) => {
   try {
     const user = req.user;
     const cart = await getCartByUserId(user.id);
@@ -109,7 +109,7 @@ cartsRouter.patch('/purchase', requireUser, async (req, res) => {
   }
 });
 
-cartsRouter.get('/', requireUser, async (req, res) => {
+cartRouter.get('/', requireUser, async (req, res) => {
   try {
     console.log(req.user);
     const cart = await getCartProductsByUserId(req.user.id);
@@ -126,7 +126,7 @@ cartsRouter.get('/', requireUser, async (req, res) => {
   }
 });
 
-cartsRouter.patch('/:id', requireUser, async (req, res) => {
+cartRouter.patch('/:id', requireUser, async (req, res) => {
   try {
     const cart = await getCartProductsByUserId(req.user.id);
     const { id } = req.params;
@@ -138,4 +138,4 @@ cartsRouter.patch('/:id', requireUser, async (req, res) => {
   }
 });
 
-module.exports = cartsRouter;
+module.exports = cartRouter;
