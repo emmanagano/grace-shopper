@@ -129,6 +129,9 @@ const getCartProducts = async () => {
 const getCartProductsByUserId = async (userId) => {
   try {
     const cart = await getCartByUserId(userId);
+    if (!cart) {
+      return;
+    }
     console.log('cart');
     const { rows: products } = await client.query(
       `
