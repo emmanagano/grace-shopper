@@ -1,0 +1,110 @@
+.admin-create-adminTeam-form,
+.admin-create-product-form {
+  margin-bottom: 10px;
+}
+
+.admin-create-adminTeam,
+.admin-create-product {
+  display: flex;
+  flex-direction: column;
+}
+.navLink {
+  padding: 10px;
+  margin: 5px;
+}
+
+.admin-create-product-form button {
+  width: 100%;
+}
+table {
+  max-width: 100%;
+  border-collapse: collapse;
+  width: 80%;
+  border-spacing: 0;
+  margin: 15px 0;
+  /* margin: 25px auto; */
+  font-size: 0.9em;
+  /* min-width: 400px; */
+  border-radius: 5px 5px 0 0;
+  /* overflow: hidden; */
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
+  /* height: 500; */
+}
+
+thead tr {
+  background-color: #009879;
+  /* background-color: #499183; */
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  /* padding: 8px; */
+  font-size: 10px;
+}
+
+tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+/* tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+} */
+
+tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+
+tbody tr:hover {
+  background-color: rgb(239, 245, 245);
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  gap: 5px;
+}
+
+/* form td:last-child {
+	display: flex;
+	justify-content: space-evenly;
+} */
+
+form * {
+  font-size: 18px;
+  width: 100%;
+}
+
+input {
+  font-size: 15px;
+  overflow-wrap: normal;
+}
+
+.pagination {
+  padding: 0.5rem;
+}
+
+td > input {
+  margin: 0;
+  height: 100%;
+  overflow-wrap: normal;
+  width: 100%;
+  border-radius: 0;
+
+  /* flex: 0 0 66.66667%;
+	max-width: 66.66667%;
+
+	display: block;
+	width: 100%;
+	display: flex;
+	flex-flow: row wrap;
+	margin: 0 -1rem 1rem -1rem; */
+}
+
+/*  */
+/* th {
+	background-color: rgb(203, 221, 230);
+} */

@@ -1,0 +1,36 @@
+.Checkout {
+  display: flex;
+}
+.checkout_button {
+  max-width: 30%;
+  font-size: 1rem;
+  padding: 20px;
+}
+.checkout_content {
+  flex: 1;
+  flex-flow: nowrap column;
+  align-items: left;
+  justify-items: left;
+  justify-self: left;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f3f3f3;
+  box-shadow: 5px 5px 5px lightgray;
+}
+.Security_Code,
+.zip_code,
+.City,
+.State {
+  width: 50%;
+}
+.checkout_input {
+  display: flex;
+  flex-flow: nowrap column;
+  align-items: right;
+  justify-content: right;
+  justify-self: right;
+}
+.inputs {
+  margin: 2rem;
+  flex: 1;
+}
