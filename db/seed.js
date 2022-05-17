@@ -11,7 +11,7 @@ async function dropTables () {
             DROP TABLE IF EXISTS cart_products;
             DROP TABLE IF EXISTS cart;
             DROP TABLE IF EXISTS products CASCADE;
-            DROP TABLE IF EXISTS users;
+            DROP TABLE IF EXISTS users CASCADE;
         `);
     } catch (error) {
         throw error;
