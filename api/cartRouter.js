@@ -13,7 +13,7 @@ cartRouter.post("/add", async(req, res) => {
         });
         res.send(cartProduct);
     } catch (error) {
-        res.send("Error adding product to cart")
+        res.send({error:error.message})
     }
 });
 
