@@ -10,8 +10,8 @@ async function dropTables () {
         await client.query(`
             DROP TABLE IF EXISTS cart_products;
             DROP TABLE IF EXISTS cart;
-            DROP TABLE IF EXISTS products;
             DROP TABLE IF EXISTS users;
+            DROP TABLE IF EXISTS products;
         `);
     } catch (error) {
         throw error;
