@@ -12,6 +12,7 @@ const { getUserByUsername } = require('../db/user');
 const productRouter = require('./productRouter');
 const { getCartByUser, createCart } = require('../db/cart');
 const { getCartProducts } = require('../db/cart_products');
+const cartRouter = require('./cartRouter');
 
 apiRouter.use("/", async(req, res, next) => {
 	if(req.headers.authorization) {
@@ -27,7 +28,9 @@ apiRouter.use("/", async(req, res, next) => {
 		};
 		req.user.cart = cart;
 		const cartProducts = await getCartProducts({userId: req.user.id});
-		req.user.cart.items = cartProducts;
+		if(cartProducts) {
+			req.user.cart.items = cartProducts;
+		}
 	};
 	next();
 });
@@ -41,7 +44,7 @@ apiRouter.use("/", async(req, res, next) => {
 apiRouter.use("/products", productRouter);
 apiRouter.use("/user", userRouter);
 // apiRouter.use("/reviews", reviewsRouter);
-// apiRouter.use("/cart", cartRouter);
+apiRouter.use("/cart", cartRouter);
 
 
 apiRouter.get("/", (req, res) => {
