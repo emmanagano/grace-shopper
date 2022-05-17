@@ -10,8 +10,8 @@ async function dropTables () {
         await client.query(`
             DROP TABLE IF EXISTS cart_products;
             DROP TABLE IF EXISTS cart;
-            DROP TABLE IF EXISTS users;
             DROP TABLE IF EXISTS products;
+            DROP TABLE IF EXISTS users;
         `);
     } catch (error) {
         throw error;
@@ -121,17 +121,17 @@ async function testDB () {
         // console.log(user);
         // const products = await getProducts();
         // console.log(products);
-        const cart = await getCartByUser({id:1});
-        // console.log(cart);
-        const addCart = await addToCart({
-            cartId: cart.id,
-            cartPrice: 66.78,
-            productId: 1,
-            quantity: 10
-        });
-        // console.log(addCart);
-        const products = await getCartProducts({userId: 1});
-        console.log(products,"cartProducts");
+        // const cart = await getCartByUser({id:1});
+        // // console.log(cart);
+        // const addCart = await addToCart({
+        //     cartId: cart.id,
+        //     cartPrice: 66.78,
+        //     productId: 1,
+        //     quantity: 10
+        // });
+        // // console.log(addCart);
+        // const products = await getCartProducts({userId: 1});
+        // console.log(products,"cartProducts");
     } catch (error) {
         throw error;
     }
@@ -144,8 +144,8 @@ async function rebuildDB () {
         await createTables();
         await createInitialUsers();
         await createInitialProducts();
-        await createInitialCart();
-        await createInitialCartProducts();
+        // await createInitialCart();
+        // await createInitialCartProducts();
     } catch (error) {
         throw error;
     }
