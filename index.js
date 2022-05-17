@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const { client } = require('./db/client');
 
-let PORT = process.env.PORT || 3001;
+let PORT = process.env.PORT || 4000;
 
 const app = express();
 
@@ -19,9 +19,9 @@ app.use('/api', apiRouter);
 
 app.use(express.static("build"));
 
-app.get("*", (req, res) => {
-    res.sendFile(__dirname + "/build/index.html");
-});
+// app.get("*", (req, res) => {
+//     res.sendFile(__dirname + "/build/index.html");
+// });
 
 app.use((err, req, res, next) => {
     res.status(400).send({

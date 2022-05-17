@@ -1,215 +1,73 @@
-require('dotenv').config();
-const express = require('express');
-const jwt = require("jsonwebtoken");
-const {
-	createUser,
-	getUserByUsername,
-	getUserByEmail,
-	getUser,
-	getAllUsers,
-	getAllAdmin,
-} = require("../db/user.js");
-const { requireAdmin } = require("./utils");
-
+const express = require("express");
+const { getUser, createUser, checkIfUserExists } = require("../db/user");
 const userRouter = express.Router();
+const jwt = require("jsonwebtoken");
 
-userRouter.get('/', async (req, res) => {
-  try {
-    if (req.user) {
-      res.send(req.user);
-      return;
+userRouter.post("/register", async(req, res) => {
+    const {username, email} = req.body;
+    try {
+        const checkUser = await checkIfUserExists({username: username, email: email});
+        if (checkUser) {
+            res.send({
+                error: " The username/email already exists"
+            })
+        }
+        const user = await createUser(req.body);
+        if(user) {
+            delete user.password;
+            const token = jwt.sign({
+                id: user.id,
+                username: user.username
+            }, process.env.SECRET_KEY, {
+                expiresIn: "1w"
+            });
+            user.token = token;
+            res.send({
+                message: "You are now registered",
+                user
+            });
+        };
+    } catch (error) {
+        res.send("There is an error during register");
     }
-  } catch (error) {
-    res.send({
-      message: error.message,
-    });
-  }
 });
 
-userRouter.get('/me', async (req, res) => {
-  try {
-    req.user ? res.send(req.user) : res.send('Error: No user logged in.');
-  } catch (error) {
-    throw error;
-  }
-});
-
-userRouter.get("/me", async (req, res) => {
-	try {
-		req.user ? res.send(req.user) : res.send("Error: No user logged in.");
-	} catch (error) {
-		throw error;
-	}
-});
-
-userRouter.get("/view", async (req, res, next) => {
-	try {
-		const users = await getAllUsers();
-		console.log(users);
-		res.send({ users });
-	} catch (error) {
-		res.send({
-			message: error.message,
-		});
-	}
-});
-
-userRouter.get("/admin", async (req, res, next) => {
-	try {
-		const users = await getAllAdmin();
-		console.log(users);
-		res.send({ users });
-	} catch (error) {
-		res.send({
-			message: error.message,
-		});
-	}
-});
-userRouter.get("/view/:username", requireAdmin, async (req, res, next) => {
-	const { username } = req.params;
-	try {
-		const users = await getUserByUsername(username);
-		delete users.password;
-		res.send({ users });
-	} catch (error) {
-		next({ error });
-	}
-});
-
-userRouter.get("/register", async (req, res) => {
-	res.send("Register Page");
-});
-
-userRouter.post("/register", async (req, res, next) => {
-	const { email, username, password } = req.body;
-
-	try {
-		const user = await getUserByUsername(username);
-
-		if (user) {
-			next({
-				name: "UserExistsError",
-				message: "Username already exists",
-			});
-			return;
-		}
-
-		const userEmail = await getUserByEmail(email);
-
-		if (userEmail) {
-			next({
-				name: "UserEmailExistsError",
-				message: "User with that email already exists",
-			});
-			return;
-		}
-
-		const newUser = await createUser({ email, username, password });
-
-		const token = jwt.sign(
-			{
-				id: newUser.id,
-				username: newUser.username,
-			},
-			process.env.SECRET_KEY,
-			{
-				expiresIn: "1w",
-			}
-		);
-
-		res.send({
-			user: newUser,
-			token,
-		});
-	} catch ({ name, message }) {
-		next({ name, message });
-	}
-});
-
-userRouter.post("/register/admin", async (req, res, next) => {
-	const { email, username, password, isAdmin } = req.body;
-
-	try {
-		const user = await getUserByUsername(username);
-
-		if (user) {
-			next({
-				name: "UserExistsError",
-				message: "Username already exists",
-			});
-			return;
-		}
-
-		const userEmail = await getUserByEmail(email);
-
-		if (userEmail) {
-			next({
-				name: "UserEmailExistsError",
-				message: "User with that email already exists",
-			});
-			return;
-		}
-
-		const newUser = await createUser({ email, username, password, isAdmin });
-
-		const token = jwt.sign(
-			{
-				id: newUser.id,
-				username: newUser.username,
-			},
-			process.env.SECRET_KEY,
-			{
-				expiresIn: "1y",
-			}
-		);
-
-		res.send({
-			user: newUser,
-			token,
-		});
-	} catch ({ name, message }) {
-		next({ name, message });
-	}
-});
-
-userRouter.get("/login", async (req, res) => {
-	res.send("Login Page");
-});
-
-userRouter.post('/login', async (req, res, next) => {
-  const { username, password } = req.body;
-
-  if (!username || !password) {
-    next({
-      name: 'MissingCredentialsError',
-      message: 'Please supply both a username and password',
-    });
-  }
-
-  try {
-    const user = await getUser({ username, password });
-
-    if (!user) {
-      res.send({ error: 'No user found' });
-      return;
+userRouter.post("/login", async(req, res) => {
+    try {
+        const user = await getUser(req.body);
+        if (!user) {
+            res.send({error: "No user found."});
+        }
+        const token = jwt.sign({
+            id: user.id,
+            username: user.username
+        }, process.env.SECRET_KEY, {
+            expiresIn: "1w"
+        });
+        if (token) {
+            user.token = token;
+            res.send({
+                message: "You are logged in!",
+                user
+            })
+        };
+    } catch (error) {
+        res.send({
+            error: error.message
+        })
     }
-
-    const token = jwt.sign(
-      {
-        id: user.id,
-        username: user.username,
-      },
-      process.env.SECRET_KEY
-    );
-
-    user.token = token;
-
-    res.send({
-      message: "you're logged in!!!",
-      token,
-    });
-  } catch (error) {
-    throw error;
-  }
 });
+
+userRouter.get("/me", async(req, res) => {
+    try {
+        if(req.user) {
+            res.send(req.user)
+        };
+    } catch (error) {
+        res.send({
+            error: error.message
+        })
+    }
+});
+
 module.exports = userRouter;

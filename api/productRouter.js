@@ -1,120 +1,68 @@
-const express = require('express');
-const {
-  getProducts,
-  createProduct,
-  editProduct,
-  destroyProduct,
-  getProductById,
-  getProductByCategory,
-} = require('../db/product');
+const express = require("express");
+const { createProduct, getProducts, updateProduct, deleteProduct, getProductById } = require("../db/product");
 const productRouter = express.Router();
 
-const { requireAdmin } = require('./utils');
-
-productRouter.get('/', async (req, res, next) => {
-  try {
-    const products = await getProducts();
-    res.send({ products });
-  } catch (error) {
-    next({
-      error: error.name,
-      message: error.message,
-    });
-  }
-});
-
-productRouter.get('/:id', async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const product = await getProductById(id);
-    res.send({ product });
-  } catch (error) {
-    next({
-      error: error.name,
-      message: error.message,
-    });
-  }
-});
-
-productRouter.get('/categories/:categoryName', async (req, res, next) => {
-  const { categoryName } = req.params;
-  try {
-    const products = await getProductByCategory(categoryName);
-    res.send({ products });
-  } catch (error) {
-    next({
-      name: error.name,
-      message: error.message,
-    });
-  }
-});
-
-productRouter.post('/', requireAdmin, async (req, res, next) => {
-  const { title, price, category, description, inventory, imgURL } = req.body;
-
-  try {
-    const product = await createProduct({
-      title,
-      price,
-      category,
-      description,
-      inventory,
-      imgURL,
-    });
-
-    if (product) {
-      res.send({ product });
-    } else {
-      next({
-        name: 'Create Product Error',
-        message: 'There was an error creating the product',
-      });
+productRouter.post("/", async(req, res) => {
+    try {
+        const product = await createProduct(req.body);
+        res.send(product);
+    } catch (error) {
+        res.send("Error posting the product")
     }
-  } catch ({ name, message }) {
-    next({
-      name,
-      message,
-    });
-  }
 });
 
-productRouter.patch('/:id', requireAdmin, async (req, res, next) => {
-  const id = req.params.id;
-  const { title, price, category, description, inventory } = req.body;
-  try {
-    const product = await editProduct(
-      id,
-      title,
-      price,
-      category,
-      description,
-      inventory
-    );
-    res.send({ product });
-  } catch (error) {
-    console.log(error);
-    next({
-      name: error.name,
-      message: error.message,
-    });
-  }
-});
-
-productRouter.delete('/:id', requireAdmin, async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const product = await destroyProduct(id);
-    if (!product) {
-      res.send({
-        message: 'Product Deleted!',
-      });
+productRouter.get("/", async(req, res) => {
+    try {
+        const products = await getProducts();
+        res.send(products);
+    } catch (error) {
+        res.send("Error getting the products")
     }
-  } catch (error) {
-    next({
-      name: error.name,
-      message: error.message,
-    });
-  }
+});
+
+productRouter.get("/:id", async(req, res) => {
+    try {
+        const product = await getProductById(req.params);
+        res.send(product)
+    } catch (error) {
+        res.send("Error getting the products")
+    }
+});
+
+productRouter.patch("/:id", async(req, res) => {
+    const {id} = req.params;
+    const { 
+        title, 
+        price, 
+        category, 
+        description, 
+        inventory 
+    } = req.body;
+
+    try {
+        const product = await updateProduct({ 
+            id, 
+            title, 
+            price, 
+            category, 
+            description, 
+            inventory 
+        });
+        res.send(product);
+    } catch (error) {
+        res.send("Error updating product");
+    }
+});
+
+productRouter.delete("/:id", async(req, res) => {
+    try {
+        const product = await deleteProduct({id:req.params.id});
+        if(!product) {
+            res.send({message: "Product Deleted"})
+        }
+    } catch (error) {
+        res.send("Error deleting product")
+    }
 });
 
 module.exports = productRouter;

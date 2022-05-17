@@ -1,118 +1,74 @@
-const { client } = require('./client');
-const { createUser, getUserByUsername, getUser } = require('./user');
+const { createCart, getCartByUser } = require("./cart");
+const { addToCart, getCartProducts } = require("./cart_products");
+const { client } = require("./client");
+const { createProduct, getProducts } = require("./product");
 const productData = require("./productData");
-const { createProduct, getProducts } = require('./product');
-const { createReview } = require('./reviews');
+const { createUser, getUser } = require("./user");
 
-async function dropTables() {
+async function dropTables () {
     try {
-        console.log("Starting to drop tables")
         await client.query(`
-            DROP TABLE IF EXISTS carts_products;
-            DROP TABLE IF EXISTS carts;
-            DROP TABLE IF EXISTS reviews;
+            DROP TABLE IF EXISTS cart_products;
+            DROP TABLE IF EXISTS cart;
             DROP TABLE IF EXISTS products;
             DROP TABLE IF EXISTS users;
         `);
-
-        console.log('Finished dropping tables!');
     } catch (error) {
         throw error;
     }
 };
 
-async function createTables() {
+async function createTables () {
     try {
-        console.log('Starting to build tables...');
-
         await client.query(`
             CREATE TABLE users (
                 id SERIAL PRIMARY KEY,
-                email VARCHAR(255) UNIQUE NOT NULL,
-                username VARCHAR(255) UNIQUE NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                username VARCHAR(255) NOT NULL,
                 password VARCHAR(255) NOT NULL,
-                "isAdmin" BOOLEAN DEFAULT false
+                "isAdmin" BOOLEAN DEFAULT false,
+                UNIQUE(email, username)
             );
             CREATE TABLE products (
                 id SERIAL PRIMARY KEY,
-                title VARCHAR(255) NOT NULL,
-                price INTEGER,
+                title TEXT NOT NULL,
+                price FLOAT NOT NULL,
                 category VARCHAR(255) NOT NULL,
                 description TEXT NOT NULL,
-                inventory INTEGER,
+                inventory INTEGER NOT NULL,
                 "imgURL" TEXT NOT NULL
             );
-            CREATE TABLE reviews (
-                id SERIAL PRIMARY KEY,
-                "creatorId" INTEGER REFERENCES users(id),
-                "productId" INTEGER REFERENCES products(id),
-                message TEXT NOT NULL
-            );
-            CREATE TABLE carts(
+            CREATE TABLE cart (
                 id SERIAL PRIMARY KEY,
                 "userId" INTEGER REFERENCES users(id),
-                "isPurchased" BOOLEAN DEFAULT FALSE
+                "isPurchased" BOOLEAN DEFAULT false
             );
-            CREATE TABLE carts_products(
+            CREATE TABLE cart_products (
                 id SERIAL PRIMARY KEY,
-                count INTEGER NOT NULL,
-                price INTEGER NOT NULL,
-                "cartId" INTEGER REFERENCES carts(id),
-                "productId" INTEGER REFERENCES products(id)
+                "cartId" INTEGER REFERENCES cart(id),
+                "cartPrice" FLOAT NOT NULL,
+                "productId" INTEGER REFERENCES products(id),
+                quantity INTEGER NOT NULL
             );
         `);
-        console.log('Finished building tables!');
     } catch (error) {
-        console.error('Error building tables!');
         throw error;
     }
 };
 
-async function createInitialUsers() {
+async function createInitialUsers () {
     try {
-        console.log('Starting to create users...');
         await createUser({
-            email: 'albert@gmail.com',
-            username: 'albert',
-            password: 'bertie99',
-            isAdmin: false,
-        });
-        await createUser({
-            email: 'sandra@gmail.com',
-            username: 'sandra',
-            password: '2sandy4me',
-            isAdmin: false,
-        });
-        await createUser({
-            email: 'glamgal@gmail.com',
-            username: 'glamgal',
-            password: 'soglam',
-            isAdmin: false,
-        });
-        await createUser({
-            email: 'jacob.admin@gmail.com',
-            username: 'jacob.admin',
-            password: 'jacob.admin',
-            isAdmin: true,
-        });
-        await createUser({
-            email: 'emma.admin@gmail.com',
-            username: 'emma.admin',
-            password: 'emma.admin',
-            isAdmin: true,
-        });
-        await createUser({
-            email: 'carmen.admin@gmail.com',
-            username: 'carmen.admin',
-            password: 'carmen.admin',
-            isAdmin: true,
-        });
-        console.log('Finished creating users!');
+            username: "emma99",
+            email: "emma@gmail.com",
+            password: "123456",
+            isAdmin: true
+        })
     } catch (error) {
-        console.error('Error creating users!');
         throw error;
     }
 };
+
 async function createInitialProducts () {
     try {
         for(const product of productData) {
@@ -130,117 +86,66 @@ async function createInitialProducts () {
     }
 };
 
-async function createInitialReviews() {
+async function createInitialCart () {
     try {
-        console.log('Starting to create reviews');
-        await createReview({
-            creatorId: 1,
-            productId: 4,
-            message: 'This is nice and the size is accurate',
-        });
-        await createReview({
-            creatorId: 2,
-            productId: 5,
-            message: 'I love the fabric of this clothing!',
-        });
-        await createReview({
-            creatorId: 3,
-            productId: 6,
-            message: 'This shirt is really soft. I wear it the moment it gets out of the dryer!',
-        });
-        await createReview({
-            creatorId: 3,
+        await createCart({
+            userId: 1
+        })
+    } catch (error) {
+        throw error;
+    }
+};
+
+async function createInitialCartProducts () {
+    try {
+        await addToCart({
+            cartId: 1,
+            cartPrice: 56.78,
             productId: 2,
-            message: 'This ring fits really well! The quality is amazing and I love the details.',
-        });
-        await createReview({
-            creatorId: 2,
-            productId: 1,
-            message: 'I gave this as a gift and she told me that everyone notices it!',
-        });
-        await createReview({
-            creatorId: 1,
+            quantity: 2
+        })
+        await addToCart({
+            cartId: 1,
+            cartPrice: 99,
             productId: 3,
-            message: 'I was gonna give this as a promise ring to my girl, but she dumped me. Their refund service is very helpful!',
-        });
-        console.log('Finished creating reviews!');
+            quantity: 5
+        })
     } catch (error) {
         throw error;
     }
 };
 
-async function testDB() {
+async function testDB () {
     try {
-        console.log('Starting to test database...');
-
-        // const allUsers = await getAllUsers();
-        // console.log('getAllUsers', allUsers);
-
-        // const userByUsername = await getUserByUsername({username:'albert'});
-        // console.log('getUserByUsername', userByUsername);
-
-        // const user = await getUser({ username: 'albert', password: 'bertie99' });
-        // console.log('here are users', user);
-
-        // const deletedProduct = await destroyProduct(4);
-        // console.log('destroyProduct', deletedProduct);
-
+        // const user = await getUser({username:"emma99", password: "123456"});
+        // console.log(user);
         // const products = await getProducts();
-        // console.log('getProducts', products);
-
-        // const productReviews = await getProductReviews();
-        // console.log('product reviews', productReviews);
-
-        // const productReviewsByProductId = await getProductReviewsByProductId(1);
-        // console.log('productReviewsByProductId', productReviewsByProductId);
-
-        // const editedReview = await editReview({
-        //   id: 1,
-        //   message: 'Updated Review: size is not accurate',
-        // });
-        // console.log('edited review: 1', editedReview);
-
-        // const reviews = await getAllReviews();
-        // console.log('here are the reviews', reviews);
-
-        // const newCart = await createCart(1);
-        // console.log('createCart', newCart);
-
-        // const cartByUserID = await getCartByUserId(1);
-        // console.log('cartByUserId', cartByUserID);
-
-        // const cartProduct = await addProductToCart(1, 40, 1, 1);
-        // console.log('addProductToCart', cartProduct);
-
-        // const cartProducts = await getCartProducts();
-        // console.log('getCartProducts', cartProducts);
-
-        // const cartById = await getCartById(1);
-        // console.log('getCartById', cartById);
-
-        // console.log('Finished testing database!');
-
-        // await purchaseCart(1);
-        // await deleteProductFromCart(1, 1);
-        // await editCount(5, 1, 2);
-
-        console.log('Finished testing database!');
+        // console.log(products);
+        const cart = await getCartByUser({id:1});
+        // console.log(cart);
+        const addCart = await addToCart({
+            cartId: cart.id,
+            cartPrice: 66.78,
+            productId: 1,
+            quantity: 10
+        });
+        // console.log(addCart);
+        const products = await getCartProducts({userId: 1});
+        console.log(products,"cartProducts");
     } catch (error) {
-        console.error('Error testing database!');
         throw error;
     }
 };
 
-async function rebuildDB() {
+async function rebuildDB () {
     try {
         client.connect();
         await dropTables();
         await createTables();
         await createInitialUsers();
         await createInitialProducts();
-        await createInitialReviews();
-        // await createInitialCarts();
-        // await createInitialCartProducts();s
+        await createInitialCart();
+        await createInitialCartProducts();
     } catch (error) {
         throw error;
     }

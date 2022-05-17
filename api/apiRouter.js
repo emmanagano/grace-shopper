@@ -3,39 +3,45 @@ const express = require("express");
 // const cartsRouter = require("./cartsRouter");
 // const productRouter = require("./productRouter");
 // const reviewsRouter = require("./reviewsRouter");
-// const userRouter = require("./userRouter");
+const userRouter = require("./userRouter");
 
 const apiRouter = express.Router();
 
 const jwt = require('jsonwebtoken');
-const { getCartByUserId } = require('../db/cart');
-const { getUserByUsername } = require("../db/user");
-const cartRouter = require('./cartRouter');
+const { getUserByUsername } = require('../db/user');
 const productRouter = require('./productRouter');
-const reviewsRouter = require('./reviewsRouter');
-const userRouter = require("./userRouter");
+const { getCartByUser, createCart } = require('../db/cart');
+const { getCartProducts } = require('../db/cart_products');
 
-apiRouter.use(async (req, res, next) => {
-	if (!req.headers.authorization) {
-		return next();
+apiRouter.use("/", async(req, res, next) => {
+	if(req.headers.authorization) {
+		const auth = req.headers.authorization.split(" ")[1];
+		const _user = jwt.decode(auth, process.env.SECRET_KEY);
+		const user = await getUserByUsername({username: _user.username});
+		req.user = user;
 	};
-	const auth = req.headers.authorization.split(" ")[1];
-	const _user = jwt.decode(auth, process.env.SECRET_KEY);
-	if (!_user) {
-		return next();
-	}
-
-	const user = await getUserByUsername(_user.username);
-	req.user = user;
-	console.log(req.user)
+	if(req.user) {
+		const cart = await getCartByUser({id: req.user.id});
+		if(!cart) {
+			await createCart({userId: req.user.id});
+		};
+		req.user.cart = cart;
+		const cartProducts = await getCartProducts({userId: req.user.id});
+		req.user.cart.items = cartProducts;
+	};
 	next();
 });
+
+// const cartRouter = require('./cartRouter');
+// const productRouter = require('./productRouter');
+// const reviewsRouter = require('./reviewsRouter');
+// const userRouter = require("./userRouter");
 
 
 apiRouter.use("/products", productRouter);
 apiRouter.use("/user", userRouter);
-apiRouter.use("/reviews", reviewsRouter);
-apiRouter.use("/cart", cartRouter);
+// apiRouter.use("/reviews", reviewsRouter);
+// apiRouter.use("/cart", cartRouter);
 
 
 apiRouter.get("/", (req, res) => {
