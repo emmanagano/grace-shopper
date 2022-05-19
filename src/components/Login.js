@@ -7,19 +7,19 @@ const Login = () => {
     const [error, setError] = useState("");
     const loginHandler = async () => {
         try {
-            const info = await fetchLogin({
+            const info = await fetchLogin(
                 username,
                 password
-            });
+            );
             if(info.error) {
                 setError(info.error);
             };
             if (info.user) {
                 localStorage.setItem("token", info.user.token);
             };
-            setUsername("");
-            setPassword("");
-            setError("");
+            // setUsername("");
+            // setPassword("");
+            // setError("");
         } catch (error) {
             throw error;
         }
@@ -44,7 +44,7 @@ const Login = () => {
                 />
                 <input
                     required
-                    type="text"
+                    type="password"
                     placeholder="Password*"
                     value={password}
                     onChange={(e) => {
