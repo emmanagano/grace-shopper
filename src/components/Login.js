@@ -17,9 +17,9 @@ const Login = () => {
             if (info.user) {
                 localStorage.setItem("token", info.user.token);
             };
-            // setUsername("");
-            // setPassword("");
-            // setError("");
+            setUsername("");
+            setPassword("");
+            setError("");
         } catch (error) {
             throw error;
         }
