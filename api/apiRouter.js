@@ -28,7 +28,7 @@ apiRouter.use("/", async(req, res, next) => {
 		};
 		req.user.cart = cart;
 		const cartProducts = await getCartProducts({userId: req.user.id});
-		if([cartProducts]) {
+		if(cartProducts) {
 			req.user.cart.items = cartProducts;
 		}
 	};

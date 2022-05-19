@@ -34,8 +34,27 @@ async function getCartProducts ({userId}) {
             ON cart.id = cart_products."cartId"
             WHERE cart.id = $1
         `,[cart.id]);
-        console.log(cart_products,"cart_products");
         return cart_products;
+    } catch (error) {
+        throw error;
+    }
+};
+
+async function updateQty ({productId, quantity}) {
+    try {
+        if(quantity) {
+            client.query(`
+                UPDATE cart_products
+                SET quantity = $2
+                WHERE "productId" = $1;
+            `,[productId, quantity])
+        }
+        const {rows: [product]} = await client.query(`
+            SELECT *
+            FROM cart_products
+            WHERE "productId" = $1
+        `,[productId]);
+        return product;
     } catch (error) {
         throw error;
     }
@@ -43,5 +62,6 @@ async function getCartProducts ({userId}) {
 
 module.exports = {
     addToCart,
-    getCartProducts
+    getCartProducts,
+    updateQty
 }

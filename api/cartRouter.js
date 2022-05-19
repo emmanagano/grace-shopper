@@ -1,5 +1,5 @@
 const express = require("express");
-const { addToCart } = require("../db/cart_products");
+const { addToCart, updateQty } = require("../db/cart_products");
 const cartRouter = express.Router();
 
 cartRouter.post("/add", async(req, res) => {
@@ -14,6 +14,20 @@ cartRouter.post("/add", async(req, res) => {
         res.send(cartProduct);
     } catch (error) {
         res.send("Error adding product to cart")
+    }
+});
+
+cartRouter.patch("/quantity", async(req, res) => {
+    const {productId, quantity} = req.body;
+    try {
+        const product = await updateQty({
+            cartId: req.user.cart.id,
+            productId,
+            quantity
+        });
+        res.send(product)
+    } catch (error) {
+        res.send("Error updating quantity");
     }
 });
 
