@@ -11,10 +11,13 @@ import "./css/App.css";
 const App = () => {
     const [user, setUser] = useState({});
     const [products, setProducts] = useState([]);
+    const lstoken = localStorage.getItem("token");
     useEffect(()=>{
-        fetchUserMe().then(user => {
-            setUser(user)
-        });
+        if(lstoken) {
+            fetchUserMe().then(user => {
+                setUser(user)
+            });
+        };
         fetchProducts().then(product => {
             setProducts(product)
         });
@@ -22,7 +25,9 @@ const App = () => {
     console.log(user);
     return (
         <div className="app_main">
-            <Navbar />
+            <Navbar 
+                setUser={setUser}
+            />
             <Routes>
                 <Route
                     path="/login"

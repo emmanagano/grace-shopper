@@ -27,18 +27,20 @@ export async function fetchLogin (
 };
 
 export async function fetchUserMe () {
-    try {
-        const resp = await fetch(`${BASE_URL}/user/me`,{
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${lstoken}`
-            }
-        });
-        const info = await resp.json();
-        return info;
-    } catch (error) {
-        throw error;
-    }
+        try {
+            if(lstoken) {
+                const resp = await fetch(`${BASE_URL}/user/me`,{
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${lstoken}`
+                    }
+                });
+                const info = await resp.json();
+                return info;
+            };
+        } catch (error) {
+            throw error;
+        }
 };
 
 export async function fetchRegister (
