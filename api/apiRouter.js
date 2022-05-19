@@ -46,12 +46,6 @@ apiRouter.use("/user", userRouter);
 // apiRouter.use("/reviews", reviewsRouter);
 apiRouter.use("/cart", cartRouter);
 
-app.use(express.static("build"));
-
-app.get("*", (req, res) => {
-    res.sendFile(__dirname + "/build/index.html");
-});
-
 apiRouter.get("/", (req, res) => {
 	res.send("api router working");
 });
