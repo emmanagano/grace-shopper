@@ -24,6 +24,19 @@ async function addToCart ({
     }
 };
 
+async function getCartProductsByCartId ({cartId}) {
+    try {
+        const {rows: cart_products} = await client.query(`
+            SELECT *
+            FROM cart_products
+            WHERE "cartId" = $1;
+        `,[cartId]);
+        return cart_products;
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function getCartProducts ({userId}) {
     try {
         const cart = await getCartByUser({id: userId});
@@ -63,5 +76,6 @@ async function updateQty ({productId, quantity}) {
 module.exports = {
     addToCart,
     getCartProducts,
+    getCartProductsByCartId,
     updateQty
 }

@@ -110,6 +110,24 @@ async function createInitialCartProducts () {
             productId: 3,
             quantity: 5
         })
+        await addToCart({
+            cartId: 1,
+            cartPrice: 56.78,
+            productId: 2,
+            quantity: 2
+        })
+        await addToCart({
+            cartId: 1,
+            cartPrice: 56.78,
+            productId: 2,
+            quantity: 2
+        })
+        await addToCart({
+            cartId: 1,
+            cartPrice: 99,
+            productId: 3,
+            quantity: 5
+        })
     } catch (error) {
         throw error;
     }
@@ -144,8 +162,8 @@ async function rebuildDB () {
         await createTables();
         await createInitialUsers();
         await createInitialProducts();
-        // await createInitialCart();
-        // await createInitialCartProducts();
+        await createInitialCart();
+        await createInitialCartProducts();
     } catch (error) {
         throw error;
     }

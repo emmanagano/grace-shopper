@@ -15,12 +15,16 @@ const { getCartProducts } = require('../db/cart_products');
 const cartRouter = require('./cartRouter');
 
 apiRouter.use("/", async(req, res, next) => {
-	if(req.headers.authorization) {
-		const auth = req.headers.authorization.split(" ")[1];
-		const _user = jwt.decode(auth, process.env.SECRET_KEY);
-		const user = await getUserByUsername({username: _user.username});
-		req.user = user;
+	if(!req.headers.authorization) {
+		return next();
 	};
+	const auth = req.headers.authorization.split(" ")[1];
+	const _user = jwt.decode(auth, process.env.SECRET_KEY);
+	if(!_user) {
+		return next();
+	};
+	const user = await getUserByUsername({username: _user.username});
+	req.user = user;
 	if(req.user) {
 		const cart = await getCartByUser({id: req.user.id});
 		if(!cart) {
@@ -28,7 +32,7 @@ apiRouter.use("/", async(req, res, next) => {
 		};
 		req.user.cart = cart;
 		const cartProducts = await getCartProducts({userId: req.user.id});
-		if(cartProducts) {
+		if([cartProducts]) {
 			req.user.cart.items = cartProducts;
 		}
 	};

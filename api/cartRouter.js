@@ -1,17 +1,31 @@
 const express = require("express");
-const { addToCart, updateQty } = require("../db/cart_products");
+const { addToCart, updateQty, getCartProductsByCartId } = require("../db/cart_products");
 const cartRouter = express.Router();
 
 cartRouter.post("/add", async(req, res) => {
     const {cartPrice, productId, quantity} = req.body;
     try {
-        const cartProduct = await addToCart({
-            cartId: req.user.cart.id,
-            cartPrice,
-            productId,
-            quantity
+        const cartProducts = await getCartProductsByCartId({cartId: req.user.cart.id})
+        const [productExists] = cartProducts.filter(product => {
+            if(product.productId === productId) {
+                return true
+            }
         });
-        res.send(cartProduct);
+        if(productExists) {
+            await updateQty({
+                productId: productExists.productId,
+                quantity: Number(productExists.quantity + quantity)
+            })
+        };
+        if(!productExists) {
+            const cartProduct = await addToCart({
+                cartId: req.user.cart.id,
+                cartPrice,
+                productId,
+                quantity
+            });
+            res.send(cartProduct);
+        };
     } catch (error) {
         res.send("Error adding product to cart")
     }
