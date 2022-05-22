@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { fetchProducts, fetchUserMe } from "./api";
+import { fetchCart, fetchProducts, fetchUserMe } from "./api";
+import Cart from "./components/Cart";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Products from "./components/Products";
@@ -11,15 +12,16 @@ import "./css/App.css";
 const App = () => {
     const [user, setUser] = useState({});
     const [products, setProducts] = useState([]);
-    const lstoken = localStorage.getItem("token");
+    const [cart, setCart] = useState([]);
     useEffect(()=>{
-        if(lstoken) {
-            fetchUserMe().then(user => {
-                setUser(user)
-            });
-        };
+        fetchUserMe().then(user => {
+            setUser(user)
+        });
         fetchProducts().then(product => {
             setProducts(product)
+        });
+        fetchCart().then(cart => {
+            setCart(cart)
         });
     },[]);
     console.log(user);
@@ -31,7 +33,9 @@ const App = () => {
             <Routes>
                 <Route
                     path="/login"
-                    element={<Login />}
+                    element={<Login 
+                        setUser={setUser}
+                    />}
                 />
                 <Route
                     path="/register"
@@ -41,6 +45,13 @@ const App = () => {
                     path="/products"
                     element={<Products 
                         products={products}
+                    />}
+                />
+                <Route
+                    path="/cart"
+                    element={<Cart 
+                        cart={cart}
+                        setCart={setCart}
                     />}
                 />
             </Routes>

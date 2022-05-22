@@ -32,7 +32,7 @@ apiRouter.use("/", async(req, res, next) => {
 		};
 		req.user.cart = cart;
 		const cartProducts = await getCartProducts({userId: req.user.id});
-		if([cartProducts]) {
+		if(req.user.cart) {
 			req.user.cart.items = cartProducts;
 		}
 	};

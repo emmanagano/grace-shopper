@@ -1,3 +1,5 @@
+import { fetchCart, fetchUserMe } from "../api";
+
 const { Link } = require("react-router-dom")
 
 const Navbar = ({setUser}) => {
@@ -16,6 +18,11 @@ const Navbar = ({setUser}) => {
                 LOGOUT
             </button>
             <Link to="/register">SIGN UP</Link>
+            <Link 
+                to="/cart"
+            >
+                CART
+            </Link>
         </div>
     )
 }

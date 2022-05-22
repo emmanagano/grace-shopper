@@ -148,8 +148,8 @@ async function testDB () {
         //     quantity: 10
         // });
         // // console.log(addCart);
-        // const products = await getCartProducts({userId: 1});
-        // console.log(products,"cartProducts");
+        const products = await getCartProducts({userId: 1});
+        console.log(products,"cartProducts");
     } catch (error) {
         throw error;
     }

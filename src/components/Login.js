@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { fetchLogin } from "../api";
 
-const Login = () => {
+const Login = ({setUser}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -15,6 +15,7 @@ const Login = () => {
                 setError(info.error);
             };
             if (info.user) {
+                setUser(info.user);
                 localStorage.setItem("token", info.user.token);
             };
             setUsername("");

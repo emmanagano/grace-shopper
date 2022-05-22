@@ -45,8 +45,18 @@ async function getCartProducts ({userId}) {
             FROM cart
             JOIN cart_products
             ON cart.id = cart_products."cartId"
-            WHERE cart.id = $1
+            WHERE cart.id = $1;
         `,[cart.id]);
+        for(const product of cart_products) {
+            const {rows: [item]} = await client.query(`
+                SELECT products.*
+                FROM cart_products
+                JOIN products
+                ON cart_products."productId" = products.id
+                WHERE cart_products."productId" = $1
+            `,[product.productId]);
+            product.item = item;
+        }
         return cart_products;
     } catch (error) {
         throw error;

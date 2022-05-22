@@ -1,4 +1,4 @@
-import { addToCart, fetchUserMe } from "../api";
+import { addToCart, fetchCart, fetchUserMe } from "../api";
 
 const Products = ({products}) => {
     return (

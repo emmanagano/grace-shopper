@@ -31,6 +31,16 @@ cartRouter.post("/add", async(req, res) => {
     }
 });
 
+cartRouter.get("/", async(req, res) => {
+    try {
+        if(req.user.cart.items) {
+            res.send(req.user.cart.items)
+        }
+    } catch (error) {
+        res.send("Error getting cart")
+    }
+});
+
 cartRouter.patch("/quantity", async(req, res) => {
     const {productId, quantity} = req.body;
     try {

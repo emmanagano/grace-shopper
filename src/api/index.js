@@ -1,5 +1,5 @@
-const BASE_URL = `https://intense-crag-00374.herokuapp.com/api`;
-// const BASE_URL = `http://localhost:4000/api`;
+// const BASE_URL = `https://intense-crag-00374.herokuapp.com/api`;
+const BASE_URL = `http://localhost:4000/api`;
 const lstoken = localStorage.getItem("token");
 
 //USER
@@ -19,7 +19,6 @@ export async function fetchLogin (
             })
         });
         const info = await resp.json();
-        console.log(info);
         return info;
     } catch (error) {
         throw error;
@@ -80,6 +79,16 @@ export async function fetchProducts () {
     }
 };
 
+export async function fetchProductById (id) {
+    try {
+        const resp = await fetch(`${BASE_URL}/products/${id}`);
+        const info = await resp.json();
+        return info;
+    } catch (error) {
+        throw error;
+    }
+};
+
 //CART
 export async function addToCart (
     cartPrice,
@@ -100,7 +109,25 @@ export async function addToCart (
             })
         });
         const info = await resp.json();
-        console.log(info)
+        if(info) {
+            fetchCart();
+        }
+        return info;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export async function fetchCart () {
+    try {
+        const resp = await fetch(`${BASE_URL}/cart`,{
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${lstoken}`
+            }
+        });
+        const info = await resp.json();
+        return info;
     } catch (error) {
         throw error;
     }
