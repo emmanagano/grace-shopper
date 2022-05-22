@@ -1,5 +1,5 @@
-// const BASE_URL = `https://intense-crag-00374.herokuapp.com/api`;
-const BASE_URL = `http://localhost:4000/api`;
+const BASE_URL = `https://intense-crag-00374.herokuapp.com/api`;
+// const BASE_URL = `http://localhost:4000/api`;
 const lstoken = localStorage.getItem("token");
 
 //USER
