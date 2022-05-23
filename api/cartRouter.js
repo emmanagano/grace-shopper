@@ -14,7 +14,7 @@ cartRouter.post("/add", async(req, res) => {
         if(productExists) {
             await updateQty({
                 productId: productExists.productId,
-                quantity: Number(productExists.quantity + quantity)
+                quantity: Number(`${productExists.quantity + quantity}`)
             })
         };
         if(!productExists) {

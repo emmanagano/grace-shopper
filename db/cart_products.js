@@ -69,7 +69,8 @@ async function updateQty ({productId, quantity}) {
             client.query(`
                 UPDATE cart_products
                 SET quantity = $2
-                WHERE "productId" = $1;
+                WHERE "productId" = $1
+                RETURNING *;
             `,[productId, quantity])
         }
         const {rows: [product]} = await client.query(`

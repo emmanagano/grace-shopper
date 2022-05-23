@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Products from "./components/Products";
 import Register from "./components/Register";
+import SingleProduct from "./components/SingleProduct";
 
 import "./css/App.css";
 
@@ -53,6 +54,10 @@ const App = () => {
                         cart={cart}
                         setCart={setCart}
                     />}
+                />
+                <Route 
+                    path="/product/:id"
+                    element={<SingleProduct />}
                 />
             </Routes>
         </div>
