@@ -1,29 +1,30 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addToCart, fetchCart, fetchUserMe } from "../api";
+import { addToCart, fetchProducts, fetchUserMe } from "../api";
+import Home from "./Home";
 
-const Products = ({products}) => {
+const Products = ({products, setProducts}) => {
     const navigate = useNavigate();
     return (
-        <div>
+        <>
+        <Home />
+        <h1 id="shop-all-title">Shop All</h1>
+        <div className="products_main">
             {products.map(product => {
                 return (
-                    <div key={product.id}>
+                    <div 
+                        key={product.id}
+                        className="each-product"
+                    >
                         <span
                             onClick={() => {
                                 navigate(`/product/${product.id}`);
-                                // fetchCart().then(item => {
-                                //     if(item.productId === product.id) {
-                                //         console.log("it's here")
-                                //     }
-                                //     console.log("hi")
-                                // })
                             }}
                         >
                             <p>{product.title}</p>
-                            <p>{product.description}</p>
-                            <p>{product.price}</p>
+                            <img src={product.imgURL} />
+                            <p>${product.price}</p>
                         </span>
-                        <img src={product.imgURL} />
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
@@ -41,6 +42,7 @@ const Products = ({products}) => {
                 )
             })}
         </div>
+        </>
     )
 }
 

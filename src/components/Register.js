@@ -22,14 +22,14 @@ const Register = () => {
                 setUsername("");
                 setPassword("");
                 setError("");
-                navigate("/login")
+                navigate("/")
             };
         } catch (error) {
             throw error;
         }
     }
     return (
-        <div className="register_main">
+        <div className="login_main">
             {error && <h2>{error}</h2>}
             <form
                 onSubmit={(e) => {

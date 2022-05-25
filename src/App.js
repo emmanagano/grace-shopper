@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { fetchCart, fetchProducts, fetchUserMe } from "./api";
 import Cart from "./components/Cart";
+import Categories from "./components/Categories";
+import Home from "./components/Home";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Products from "./components/Products";
@@ -28,13 +30,10 @@ const App = () => {
     console.log(user);
     return (
         <div className="app_main">
-            <Navbar 
-                setUser={setUser}
-            />
             <Routes>
                 <Route
-                    path="/login"
-                    element={<Login 
+                    path="/"
+                    element={<Home 
                         setUser={setUser}
                     />}
                 />
@@ -46,6 +45,7 @@ const App = () => {
                     path="/products"
                     element={<Products 
                         products={products}
+                        setProducts={setProducts}
                     />}
                 />
                 <Route

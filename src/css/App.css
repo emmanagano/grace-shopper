@@ -1,9 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Da+2&display=swap");
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Baloo Da 2", cursive;
 }
-img {
-  width: 50px;
-  height: 50px;
+.home_main {
+  width: 100vw;
+  height: 90vh;
+  position: relative;
+}
+.home_main_button button:hover {
+  background-color: rgb(49, 49, 49);
+}
+.navbar_main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  width: 100vw;
+  /* border-bottom: gray solid 2px; */
+  /* box-shadow: 3px 3px 3px gray; */
+}
+
+.navbar_main span {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* margin: 1rem; */
+  padding: 1rem;
+}
+.navbar_main a,
+.navbar_main button {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem;
+  padding: 1rem;
+  text-decoration: none;
+  color: black;
+  font-size: 1.3rem;
+  border: none;
+  background-color: transparent;
+}
+.navbar_main button:hover {
+  color: white;
+}
+.navbar_main svg {
+  margin: 0 0.5rem;
+  padding: 0;
+  align-items: center;
+  font-size: 1.3rem;
+}
+.navbar_main h1 {
+  margin: 2rem;
+}
+.categories_main {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 15%;
+  flex-direction: column;
+  padding: 0 2.5rem;
+  /* border-top: solid 2px #3b7577;
+  border-bottom: solid 2px #3b7577; */
+}
+
+.categories_main a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: black;
+  margin: 0.5rem;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  /* border: solid 2px #3b7577; */
+  width: 7rem;
+  height: 2rem;
+  /* color: white; */
+}
+
+.categories_main a:hover {
+  background-color: white;
+}
+
+#shop-all-title {
+  text-align: center;
+}
+
+.products_main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.each-product {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  padding: 1rem;
+}
+.each-product p {
+  font-size: 1.5rem;
+  color: #3b7577;
+}
+.each-product img {
+  width: 35vw;
+  height: 82vh;
+}
+.each-product button {
+  padding: 0.5rem;
+  background-color: #3b7577;
+  border: none;
+  color: white;
+}
+.login-register {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.493);
+}
+.login_content {
+  background-color: white;
+  padding: 1rem;
+  width: 30%;
+  height: 70%;
+}
+.login_close {
+  display: flex;
+  justify-content: flex-end;
+}
+.login_options {
+  display: flex;
+  justify-content: space-around;
+  margin: 0.5rem 0;
+}
+.login_options button {
+  background-color: transparent;
+  border: none;
+}
+.login_main form {
+  display: flex;
+  flex-direction: column;
+}
+.login_main input {
+  margin: 1rem;
+  padding: 1rem;
+}
+.login_main button {
+  margin: 1rem;
+  padding: 1rem;
 }

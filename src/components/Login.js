@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchLogin } from "../api";
 
 const Login = ({setUser}) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
     const loginHandler = async () => {
         try {
             const info = await fetchLogin(
@@ -17,6 +19,7 @@ const Login = ({setUser}) => {
             if (info.user) {
                 setUser(info.user);
                 localStorage.setItem("token", info.user.token);
+                navigate("/")
             };
             setUsername("");
             setPassword("");
