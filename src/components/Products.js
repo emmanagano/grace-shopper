@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { addToCart, fetchProducts, fetchUserMe } from "../api";
 import Home from "./Home";
+import SingleProduct from "./SingleProduct";
 
 const Products = ({products, setProducts}) => {
     const navigate = useNavigate();
@@ -22,7 +23,15 @@ const Products = ({products, setProducts}) => {
                             }}
                         >
                             <p>{product.title}</p>
-                            <img src={product.imgURL} />
+                            <img 
+                                src={product.imgURL}
+                                onMouseOver={(e) => {
+                                    e.currentTarget.src = product.subImg
+                                }}
+                                onMouseOut={(e) => {
+                                    e.currentTarget.src = product.imgURL
+                                }} 
+                            />
                             <p>${product.price}</p>
                         </span>
                         <button

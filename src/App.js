@@ -42,7 +42,7 @@ const App = () => {
                     element={<Register />}
                 />
                 <Route
-                    path="/products"
+                    path="/products/*"
                     element={<Products 
                         products={products}
                         setProducts={setProducts}

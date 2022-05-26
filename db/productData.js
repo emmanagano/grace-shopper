@@ -7,7 +7,8 @@ const productData = [
         `,
         category: 'women',
         inventory: 28,
-        imgURL:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Joni-Pink-Floral-Cotton-Dress-by-KITRI-Studio-Front_675x.jpg?v=1643251954'
+        imgURL:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Joni-Pink-Floral-Cotton-Dress-by-KITRI-Studio-Front_675x.jpg?v=1643251954',
+        subImg: 'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Joni-Pink-Floral-Cotton-Dress-by-KITRI-Studio_675x.jpg?v=1643251954'
     },
     {
         title: 'Florence Lilac Cotton Cardigan',
@@ -17,6 +18,7 @@ const productData = [
         category: 'women',
         inventory: 14,
         imgURL:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Florence-Lilac-Cotton-Cardigan-by-KITRI-Studio-Front_675x.jpg?v=1643250391',
+        subImg:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Florence-Lilac-Cotton-Cardigan-by-KITRI-Studio_675x.jpg?v=1643250391'
     },
     {
         title: 'Prunella Navy Animal Spot Dress',
@@ -26,6 +28,7 @@ const productData = [
         category: 'women',
         inventory: 50,
         imgURL:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Prunella-Navy-Animal-Spot-Dress-by-KITRI-Studio-Front_675x.jpg?v=1643253126',
+        subImg:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Prunella-Navy-Animal-Spot-Dress-by-KITRI-Studio_675x.jpg?v=1643253126'
     },
     {
         title: 'Persephone Shirred Pink Checker Dress',
@@ -34,6 +37,7 @@ const productData = [
         category: 'women',
         inventory: 17,
         imgURL:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Persephone-Shirred-Pink-Checker-Dress-by-KITRI-Studio-Front_675x.jpg?v=1624025209',
+        subImg:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/KITRI-Studio-Persephone-Shirred-Pink-Checker-Dress_675x.jpg?v=1624025210'
     },
     {
         title: 'Harlow Sienna Floral Mini Dress',
@@ -43,6 +47,7 @@ const productData = [
         category: 'women',
         inventory: 46,
         imgURL:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Harlow-Sienna-Floral-Mini-Dress-by-KITRI-Studio-Front2_675x.jpg?v=1643252362',
+        subImg:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Harlow-Sienna-Floral-Mini-Dress-by-KITRI-Studio_675x.jpg?v=1643252362'
     },
     {
         title: 'Eaton Short Sleeve Shirt',
@@ -51,6 +56,7 @@ const productData = [
         category: 'men',
         inventory: 54,
         imgURL: 'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1970962-SS22-shirts-lifestyle-59_2800x.jpg?v=1650631752',
+        subImg:'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1981940_eaton-shirt-sleeve-beeswax_1100x.jpg?v=1650631752'
     },
     {
         title: 'Eaton Long Sleeve Shirt',
@@ -59,15 +65,16 @@ const productData = [
         category: 'men',
         inventory: 37,
         imgURL: 'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1971025-SS22-shirts-lifestyle-106_1100x.jpg?v=1650382577',
+        subImg:'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1978752-eaton-long-sleeve-ecru_1100x.jpg?v=1650382577'
     },
     {
-        title: 'Kilmar Quilted Shirt',
+        title: 'Petrichor Smock Shirt',
         price: 183,
-        description:
-            'The Kilmar Quilted Shirt is not quite an overshirt, but more than a shirt. This lightweight yet warm shirt is made from a hardy blend of linen & organic cotton, with a bamboo fibre fill - a natural alternative to synthetic insulation. Featuring Finisterre corozo nut buttons, a button-down top patch pocket and separate pen pocket and adjustable cuffs. The Kilmar Shirt offers an easy going casual style, great either buttoned up or open over a t-shirt.',
+        description:`There's something special about workwear, clothes that are fit for purpose and built to stand the test of time, with more stories to tell as they age. Our Petrichor Shirt pairs details from fishermen's smocks with a durable organic cotton fabric and overshirt fit, for a contemporary practical style that will just get better and better with wear.`,
         category: 'men',
         inventory: 28,
-        imgURL: 'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1940059_SS22_spring_shirts-9_1100x.jpg?v=1647449704',
+        imgURL: 'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1971001-SS22-shirts-lifestyle-89_1100x.jpg?v=1650632147',
+        subImg:'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1978772_petrichore-smock-flint_1100x.jpg?v=1650632147'
     },
     {
         title: "Atlas Short Sleeve Shirt",
@@ -76,6 +83,7 @@ const productData = [
         category: 'men',
         inventory: 31,
         imgURL: 'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1970917-SS22-shirts-lifestyle-14_1100x.jpg?v=1650382561',
+        subImg:'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1978739-camp-collar-shirt-north-hills-print_1100x.jpg?v=1650382561'
     },
     {
         title:"Eddystone Shirt",
@@ -84,6 +92,7 @@ const productData = [
         category: 'men',
         inventory: 43,
         imgURL: 'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1943338_spring_2022-25_1100x.jpg?v=1646748315',
+        subImg:'https://cdn.shopify.com/s/files/1/1074/5128/products/vb1951174_eddystone-shirt-navy-static_1100x.jpg?v=1646226190'
     },
     {
         title: "Clementine Pink Ditsy Floral Top",
@@ -92,6 +101,7 @@ const productData = [
         category: 'women',
         inventory: 61,
         imgURL: 'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Clementine-Pink-Ditsy-Floral-Top-by-KITRI-Studio-Front_675x.jpg?v=1650646258',
+        subImg:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Clementine-Pink-Ditsy-Floral-Top-by-KITRI-Studio_675x.jpg?v=1650646258'
     },
     {
         title: "Olga Tie Back Black Mono Floral Mini Dress",
@@ -100,6 +110,7 @@ const productData = [
         category: 'women',
         inventory: 79,
         imgURL: 'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Olga-Tie-Back-Black-Mono-Floral-Mini-Dress-by-KITRI-Studio-Front_675x.jpg?v=1650660004',
+        subImg:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Olga-Tie-Back-Black-Mono-Floral-Mini-Dress-by-KITRI-Studio_675x.jpg?v=1650660004'
     },
     {
         title: 'Bunty Blanket Stripe Midi Dress',
@@ -108,6 +119,7 @@ const productData = [
         category: 'women',
         inventory: 50,
         imgURL: 'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Bunty-Blanket-Stripe-Midi-Dress-by-KITRI-Studio-Front_675x.jpg?v=1650663989',
+        subImg:'https://cdn.shopify.com/s/files/1/0008/9748/2815/products/Bunty-Blanket-Stripe-Midi-Dress-by-KITRI-Studio_675x.jpg?v=1650663989'
     },
     {
         title: 'FUN FUN Top & Short Set',
@@ -120,6 +132,7 @@ const productData = [
         category: 'kids',
         inventory: 70,
         imgURL: 'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11378/28105/IMG_0586__44667.1650405482.jpg?c=2',
+        subImg:'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11378/28107/IMG_0588__35691.1650405480.jpg?c=2'
     },
     {
         title: 'BYBLOS Girls Black Logo Dress',
@@ -128,6 +141,7 @@ const productData = [
         category: 'kids',
         inventory: 70,
         imgURL: 'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11375/28090/BYJDR11653__38297.1650405144.jpg?c=2',
+        subImg:'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11375/28090/BYJDR11653__38297.1650405144.jpg?c=2'
     },
     {
         title: 'BYBLOS Girls Silver Faux Leather',
@@ -136,6 +150,7 @@ const productData = [
         category: '',
         inventory: 70,
         imgURL: 'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11373/28084/BYJJK11886__81237.1650404314.jpg?c=2',
+        subImg:'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11373/28084/BYJJK11886__81237.1650404314.jpg?c=2'
     },
     {
         title: 'BYBLOS Girls Logo Top & Sorts Set',
@@ -144,6 +159,7 @@ const productData = [
         category: '',
         inventory: 70,
         imgURL: 'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11370/28075/BYBCM11693__41018.1650404029.jpg?c=2',
+        subImg: 'https://cdn11.bigcommerce.com/s-4wjqlc/images/stencil/1280x1280/products/11370/28075/BYBCM11693__41018.1650404029.jpg?c=2'
     },
     {
         title: 'GTerrace Drop Earrings',
@@ -152,6 +168,7 @@ const productData = [
         category: 'accesories',
         inventory: 70,
         imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L101061-2_1426x.jpg?v=1650308606',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L101061-4_1426x.jpg?v=1650308606'
     },
     {
         title: 'Textile Drop Earrings | Houndstooth',
@@ -160,6 +177,7 @@ const productData = [
         category: 'kids',
         inventory: 50,
         imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L101009-D-1_1426x.jpg?v=1650308558',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L101009-D-4_1426x.jpg?v=1650308562'
     },
     {
         title: 'Regal Drop Earrings',
@@ -168,6 +186,7 @@ const productData = [
         category: 'accessories',
         inventory: 60,
         imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L101009-C-2_1426x.jpg?v=1650308512',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L101043-4_1426x.jpg?v=1650308200'
     },
     {
         title: 'Boheme Stone Necklace (14K)',
@@ -176,7 +195,8 @@ const productData = [
         White and turquoise marble stone`,
         category: 'kids',
         inventory: 60,
-        imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/020200058__13997.jpg?v=1645113595',
+        imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/020100370-2__34904_1426x.jpg?v=1645113593',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/020200058__13997.jpg?v=1645113595'
     },
     {
         title: 'Sunset Circle Necklace (14K)',
@@ -185,6 +205,7 @@ const productData = [
         category: 'accessories',
         inventory: 60,
         imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/020100562_1__77526.jpg?v=1645115405',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/020100562-4__94244_1426x.jpg?v=1645115404'
     },
     {
         title: 'Hamlet Layered Necklace',
@@ -193,6 +214,7 @@ const productData = [
         category: 'accessories',
         inventory: 60,
         imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L201005-2__41179_1426x.jpg?v=1645115930',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/L201005-3__67325_1426x.jpg?v=1645115932'
     },
     {
         title: 'Thick and Thin Chain Bracelet (14K)',
@@ -201,14 +223,16 @@ const productData = [
         category: 'accessories',
         inventory: 60,
         imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/030100160-1__65657_1426x.jpg?v=1645115639',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/030100160-3__31041_1426x.jpg?v=1645115637'
     },
     {
-        title: 'Anklet | Gold',
+        title: 'Cool Girl Chain Anklet | Gold',
         price: 16,
         description:'Never try hard to look trendy again in this golden chic anklet!',
         category: 'accessories',
         inventory: 60,
         imgURL: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/030800020-G-2__36689_1426x.jpg?v=1645115815',
+        subImg: 'https://cdn.shopify.com/s/files/1/0627/7388/7215/products/030800020-G-3__01454_1426x.jpg?v=1645115813'
     }
 ]
 

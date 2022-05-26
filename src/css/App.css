@@ -5,6 +5,10 @@
   box-sizing: border-box;
   font-family: "Baloo Da 2", cursive;
 }
+html,
+body {
+  height: 100%;
+}
 .home_main {
   width: 100vw;
   height: 90vh;
@@ -114,6 +118,7 @@
   border: none;
   color: white;
 }
+
 .login-register {
   display: flex;
   flex-direction: column;
@@ -153,5 +158,33 @@
 }
 .login_main button {
   margin: 1rem;
+  padding: 1rem;
+}
+
+.single-product_main {
+  display: flex;
+  flex-direction: column;
+}
+.single-product_nav {
+  display: flex;
+  justify-content: space-between;
+}
+.single-product_nav p {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+.single-product_nav svg {
+  padding: 0;
+}
+.single-product_content img {
+  width: 30vw;
+  height: 70vh;
+  margin: 0 2rem;
+}
+.single-product_content {
+  display: flex;
+  justify-content: space-between;
   padding: 1rem;
 }

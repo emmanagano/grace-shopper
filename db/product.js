@@ -6,7 +6,8 @@ async function createProduct ({
     category,
     description,
     inventory,
-    imgURL
+    imgURL,
+    subImg
 }) {
     try {
         const {rows: [product]} = await client.query(`
@@ -16,11 +17,12 @@ async function createProduct ({
                 category,
                 description,
                 inventory,
-                "imgURL"
+                "imgURL",
+                "subImg"
             )
-            VALUES ($1, $2, $3, $4, $5, $6)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING *;
-        `,[title, price, category, description, inventory, imgURL]);
+        `,[title, price, category, description, inventory, imgURL, subImg]);
         return product;
     } catch (error) {
         throw error;

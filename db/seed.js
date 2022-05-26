@@ -13,6 +13,7 @@ async function dropTables () {
             DROP TABLE IF EXISTS products CASCADE;
             DROP TABLE IF EXISTS users CASCADE;
         `);
+        console.log("Finished dropping tables")
     } catch (error) {
         throw error;
     }
@@ -36,7 +37,8 @@ async function createTables () {
                 category VARCHAR(255) NOT NULL,
                 description TEXT NOT NULL,
                 inventory INTEGER NOT NULL,
-                "imgURL" TEXT NOT NULL
+                "imgURL" TEXT NOT NULL,
+                "subImg" TEXT NOT NULL
             );
             CREATE TABLE cart (
                 id SERIAL PRIMARY KEY,
@@ -51,6 +53,7 @@ async function createTables () {
                 quantity INTEGER NOT NULL
             );
         `);
+        console.log("Finished creating tables")
     } catch (error) {
         throw error;
     }
@@ -78,9 +81,11 @@ async function createInitialProducts () {
                 category: product.category,
                 description: product.description,
                 inventory: product.inventory,
-                imgURL: product.imgURL
+                imgURL: product.imgURL,
+                subImg: product.subImg
             })
         }
+        console.log("Finished creating products")
     } catch (error) {
         throw error;
     }
@@ -137,8 +142,8 @@ async function testDB () {
     try {
         // const user = await getUser({username:"emma99", password: "123456"});
         // console.log(user);
-        // const products = await getProducts();
-        // console.log(products);
+        const products = await getProducts();
+        console.log(products);
         // const cart = await getCartByUser({id:1});
         // // console.log(cart);
         // const addCart = await addToCart({
@@ -148,8 +153,8 @@ async function testDB () {
         //     quantity: 10
         // });
         // // console.log(addCart);
-        const products = await getCartProducts({userId: 1});
-        console.log(products,"cartProducts");
+        // const products = await getCartProducts({userId: 1});
+        // console.log(products,"cartProducts");
     } catch (error) {
         throw error;
     }
